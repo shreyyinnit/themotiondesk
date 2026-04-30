@@ -6,7 +6,7 @@
   <title>Motion Desk — Creative Complex Interface</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -19,6 +19,12 @@
       --border-subtle: rgba(255, 255, 255, 0.08);
       --font-mono: 'Space Mono', monospace;
       --font-sans: 'Inter', sans-serif;
+      --font-display: 'Playfair Display', serif;
+      
+      --gazette-accent: #F5F0E8;
+      --agency-accent: #C8281E;
+      --perspective-accent: #1B3022;
+      --desk-accent: #C8940A;
     }
 
     html { scroll-behavior: smooth; }
@@ -96,8 +102,6 @@
       transition: all 0.3s;
     }
 
-    .nav-logo:hover { letter-spacing: 0.25em; }
-
     .nav-modules {
       display: flex;
       gap: 32px;
@@ -128,17 +132,9 @@
       transition: width 0.3s;
     }
 
-    .nav-module-link:hover {
-      color: var(--accent-color);
-    }
-
-    .nav-module-link.active {
-      color: var(--accent-color);
-    }
-
-    .nav-module-link.active::after {
-      width: 100%;
-    }
+    .nav-module-link:hover { color: var(--accent-color); }
+    .nav-module-link.active { color: var(--accent-color); }
+    .nav-module-link.active::after { width: 100%; }
 
     /* LOADING OVERLAY */
     .loading-overlay {
@@ -153,15 +149,9 @@
       align-items: center;
       justify-content: center;
       z-index: 999;
-      animation: fadeInOverlay 0.3s ease;
     }
 
     .loading-overlay.active { display: flex; }
-
-    @keyframes fadeInOverlay {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
 
     .loading-message {
       font-family: var(--font-mono);
@@ -182,7 +172,6 @@
       display: none;
       min-height: 100vh;
       padding-top: 64px;
-      position: relative;
     }
 
     .module.active {
@@ -191,50 +180,21 @@
     }
 
     @keyframes moduleEnter {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* HERO SECTION */
-    .hero {
+    /* MANIFOLD (HOME) */
+    .manifold {
       min-height: calc(100vh - 64px);
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding: 80px 60px;
-      position: relative;
-      overflow: hidden;
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
-      animation: float 20s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-30px); }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-    }
-
-    .hero-tag {
+    .manifold-header { max-width: 900px; margin-bottom: 60px; }
+    .manifold-tag {
       font-family: var(--font-mono);
       font-size: 10px;
       letter-spacing: 0.2em;
@@ -242,156 +202,92 @@
       color: var(--accent-color);
       margin-bottom: 20px;
       display: inline-block;
-      padding: 8px 12px;
-      border: 1px solid var(--border-subtle);
     }
 
-    .hero-title {
-      font-size: 64px;
+    .manifold-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 100px);
       font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 24px;
-      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 32px;
     }
 
-    .hero-subtitle {
-      font-size: 18px;
+    .manifold-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .wing-panel {
+      border: 1px solid var(--border-subtle);
+      padding: 48px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .wing-panel:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-color);
+      background: rgba(255, 107, 53, 0.05);
+    }
+
+    .wing-panel-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .wing-panel-name {
+      font-family: var(--font-display);
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+
+    .wing-panel-desc {
+      font-size: 15px;
       line-height: 1.6;
       color: var(--text-muted);
-      margin-bottom: 40px;
-      max-width: 600px;
+      max-width: 320px;
     }
 
-    .hero-cta {
-      display: inline-flex;
-      gap: 12px;
+    /* WING SPECIFIC STYLES */
+    .section-header { padding: 80px 60px; border-bottom: 1px solid var(--border-subtle); }
+    .section-tag { font-family: var(--font-mono); font-size: 10px; color: var(--accent-color); margin-bottom: 16px; display: block; }
+    .section-title { font-family: var(--font-display); font-size: 64px; margin-bottom: 24px; }
+    .section-subtitle { font-size: 18px; color: var(--text-muted); max-width: 700px; line-height: 1.6; }
+
+    .content-grid { padding: 60px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    .content-item { border: 1px solid var(--border-subtle); padding: 40px; transition: all 0.3s; cursor: pointer; }
+    .content-item:hover { border-color: var(--accent-color); background: rgba(255, 255, 255, 0.03); }
+    .item-meta { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); margin-bottom: 16px; display: flex; gap: 16px; }
+    .item-title { font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+    .item-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* FOOTER */
+    .footer {
+      padding: 60px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
       align-items: center;
       font-family: var(--font-mono);
       font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent-color);
-      text-decoration: none;
-      padding: 12px 20px;
-      border: 1px solid var(--border-subtle);
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .hero-cta:hover {
-      border-color: var(--accent-color);
-      background: rgba(255, 107, 53, 0.1);
-    }
-
-    /* GRID SECTION */
-    .grid-section {
-      padding: 80px 60px;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-    }
-
-    .grid-item {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border-subtle);
-      padding: 40px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-
-    .grid-item::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent);
-      transition: left 0.5s;
-    }
-
-    .grid-item:hover::before {
-      left: 100%;
-    }
-
-    .grid-item:hover {
-      border-color: var(--accent-color);
-      background: rgba(255, 107, 53, 0.05);
-    }
-
-    .grid-item-tag {
-      font-family: var(--font-mono);
-      font-size: 8px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent-color);
-      margin-bottom: 16px;
-      display: inline-block;
-    }
-
-    .grid-item-title {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      line-height: 1.3;
-    }
-
-    .grid-item-desc {
-      font-size: 14px;
-      line-height: 1.6;
       color: var(--text-muted);
-    }
-
-    .grid-item-status {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      font-family: var(--font-mono);
-      font-size: 7px;
-      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--accent-secondary);
-      padding: 4px 8px;
-      border: 1px solid var(--accent-secondary);
     }
 
-    /* EXPERIMENTAL ZONE */
-    .experimental-zone {
-      padding: 80px 60px;
-      position: relative;
-    }
+    .footer-links { display: flex; gap: 32px; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; cursor: pointer; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--accent-color); }
 
-    .experimental-container {
-      background: rgba(255, 107, 53, 0.05);
-      border: 2px dashed var(--accent-color);
-      padding: 60px;
-      position: relative;
-      transform: rotate(-1deg);
-      transition: all 0.3s;
-    }
-
-    .experimental-container:hover {
-      transform: rotate(0deg) scale(1.02);
-      background: rgba(255, 107, 53, 0.1);
-    }
-
-    .experimental-title {
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      color: var(--accent-color);
-    }
-
-    .experimental-desc {
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--text-muted);
-      max-width: 600px;
-    }
-
-    /* HIDDEN AREA */
+    /* HIDDEN TRIGGER */
     .hidden-trigger {
       position: fixed;
       bottom: 20px;
@@ -405,13 +301,7 @@
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      transition: all 0.3s;
       z-index: 500;
-    }
-
-    .hidden-trigger:hover {
-      background: rgba(255, 107, 53, 0.2);
-      border-color: var(--accent-color);
     }
 
     .hidden-panel {
@@ -426,408 +316,208 @@
       display: none;
       flex-direction: column;
       gap: 12px;
-      animation: slideUp 0.3s ease;
       z-index: 500;
     }
 
     .hidden-panel.active { display: flex; }
 
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hidden-panel-title {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent-color);
-      margin-bottom: 8px;
-    }
-
-    .hidden-panel-item {
-      font-size: 12px;
-      line-height: 1.5;
-      color: var(--text-muted);
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .hidden-panel-item:last-child {
-      border-bottom: none;
-    }
-
-    /* FOOTER */
-    .footer {
-      background: rgba(255, 255, 255, 0.02);
-      border-top: 1px solid var(--border-subtle);
-      padding: 40px 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 32px;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.3s;
-      cursor: pointer;
-    }
-
-    .footer-links a:hover {
-      color: var(--accent-color);
-    }
-
-    /* RESPONSIVE */
     @media (max-width: 768px) {
-      .grid-section {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding: 60px 30px;
-      }
-
-      .hero-title {
-        font-size: 40px;
-      }
-
-      .nav-system {
-        padding: 0 24px;
-      }
-
-      .nav-modules {
-        gap: 16px;
-      }
+      .manifold-grid, .content-grid { grid-template-columns: 1fr; }
+      .section-title { font-size: 40px; }
     }
   </style>
 </head>
 <body>
   <div class="content-wrapper">
-    <!-- NAVIGATION -->
     <nav class="nav-system">
-      <a class="nav-logo" onclick="scrollToTop()">MOTION DESK</a>
+      <a class="nav-logo" onclick="switchModule('manifold')">MOTION DESK</a>
       <div class="nav-modules">
-        <a class="nav-module-link active" onclick="switchModule('visual-lab')">Visual Lab</a>
-        <a class="nav-module-link" onclick="switchModule('motion-lab')">Motion Lab</a>
-        <a class="nav-module-link" onclick="switchModule('concept-archive')">Concept Archive</a>
-        <a class="nav-module-link" onclick="switchModule('experimental')">Experimental</a>
+        <a class="nav-module-link" onclick="switchModule('gazette')">The Gazette</a>
+        <a class="nav-module-link" onclick="switchModule('agency')">The Agency</a>
+        <a class="nav-module-link" onclick="switchModule('perspective')">The Perspective</a>
+        <a class="nav-module-link" onclick="switchModule('desk')">The Desk</a>
       </div>
     </nav>
 
-    <!-- LOADING OVERLAY -->
     <div class="loading-overlay" id="loadingOverlay">
       <div class="loading-message" id="loadingMessage">Initializing environment...</div>
     </div>
 
-    <!-- VISUAL LAB MODULE -->
-    <section class="module active" id="visual-lab">
-      <div class="hero">
-        <div class="hero-content">
-          <span class="hero-tag">VISUAL LAB</span>
-          <h1 class="hero-title">Design Systems & Visual Exploration</h1>
-          <p class="hero-subtitle">A space where visual languages are constructed, tested, and evolved. Every element is a deliberate choice in a larger system.</p>
-          <a class="hero-cta" onclick="discoverMore('visual-lab')">Explore System →</a>
+    <!-- MANIFOLD MODULE -->
+    <section class="module active" id="manifold">
+      <div class="manifold">
+        <div class="manifold-header">
+          <span class="manifold-tag">SYSTEM CORE</span>
+          <h1 class="manifold-title">Motion Desk — A Creative Complex.</h1>
+          <p class="section-subtitle">A dynamic, multi-layered digital environment where creativity is actively happening, evolving, and mutating in real time.</p>
         </div>
-      </div>
-
-      <div class="grid-section">
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">ACTIVE</span>
-          <span class="grid-item-tag">Composition</span>
-          <h3 class="grid-item-title">Grid Disruption Study</h3>
-          <p class="grid-item-desc">Breaking symmetry while maintaining structure. A controlled rebellion against perfect alignment.</p>
-        </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">IN PROGRESS</span>
-          <span class="grid-item-tag">Color Theory</span>
-          <h3 class="grid-item-title">Chromatic Layers</h3>
-          <p class="grid-item-desc">Exploring how color creates depth and guides attention through a visual hierarchy.</p>
-        </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">ITERATION 03</span>
-          <span class="grid-item-tag">Typography</span>
-          <h3 class="grid-item-title">Type as System</h3>
-          <p class="grid-item-desc">Font families as structural elements. How typeface choices communicate intent and philosophy.</p>
-        </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">ACTIVE</span>
-          <span class="grid-item-tag">Spatial Design</span>
-          <h3 class="grid-item-title">Negative Space Logic</h3>
-          <p class="grid-item-desc">The invisible architecture. How emptiness creates meaning and guides the eye through composition.</p>
+        <div class="manifold-grid">
+          <div class="wing-panel" onclick="switchModule('gazette')">
+            <span class="wing-panel-tag">WING 01</span>
+            <h2 class="wing-panel-name">The Gazette</h2>
+            <p class="wing-panel-desc">An independent media wing focusing on long-form journalism, culture, and digital ecosystems.</p>
+          </div>
+          <div class="wing-panel" onclick="switchModule('agency')">
+            <span class="wing-panel-tag">WING 02</span>
+            <h2 class="wing-panel-name">The Agency</h2>
+            <p class="wing-panel-desc">A creative laboratory for brands, specializing in visual identity, strategy, and digital experiences.</p>
+          </div>
+          <div class="wing-panel" onclick="switchModule('perspective')">
+            <span class="wing-panel-tag">WING 03</span>
+            <h2 class="wing-panel-name">The Perspective</h2>
+            <p class="wing-panel-desc">A space for essays, opinion pieces, and deep analysis on the architecture of ideas.</p>
+          </div>
+          <div class="wing-panel" onclick="switchModule('desk')">
+            <span class="wing-panel-tag">WING 04</span>
+            <h2 class="wing-panel-name">The Desk</h2>
+            <p class="wing-panel-desc">The operational core. Managing systems, people, and the evolution of the complex.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- MOTION LAB MODULE -->
-    <section class="module" id="motion-lab">
-      <div class="hero">
-        <div class="hero-content">
-          <span class="hero-tag">MOTION LAB</span>
-          <h1 class="hero-title">Animation & Movement Studies</h1>
-          <p class="hero-subtitle">Motion is not decoration. It's a language. Every transition tells a story about how systems respond and evolve.</p>
-          <a class="hero-cta" onclick="discoverMore('motion-lab')">Explore Movements →</a>
-        </div>
+    <!-- THE GAZETTE -->
+    <section class="module" id="gazette">
+      <div class="section-header">
+        <span class="section-tag">WING 01 — MEDIA</span>
+        <h1 class="section-title">The Gazette</h1>
+        <p class="section-subtitle">Reporting on the intersection of culture, technology, and the creative process. Independent journalism for the digital age.</p>
       </div>
-
-      <div class="grid-section">
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">ACTIVE</span>
-          <span class="grid-item-tag">Interaction</span>
-          <h3 class="grid-item-title">Hover Responses</h3>
-          <p class="grid-item-desc">Micro-interactions that feel reactive, not mechanical. Systems that respond to user intent.</p>
+      <div class="content-grid">
+        <div class="content-item">
+          <div class="item-meta"><span>ISSUE 04</span><span>APR 28, 2026</span></div>
+          <h3 class="item-title">The Attention Economy & The Death of Depth</h3>
+          <p class="item-desc">How our current media landscape is optimized for speed over significance, and what we lose in the process.</p>
         </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">IN PROGRESS</span>
-          <span class="grid-item-tag">Scroll Behavior</span>
-          <h3 class="grid-item-title">Progressive Reveals</h3>
-          <p class="grid-item-desc">Content that unfolds as you scroll. Depth created through layered, time-based disclosure.</p>
-        </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">ITERATION 02</span>
-          <span class="grid-item-tag">Transition Design</span>
-          <h3 class="grid-item-title">State Changes</h3>
-          <p class="grid-item-desc">How systems transform between states. Smooth, intentional transitions that maintain context.</p>
-        </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">ACTIVE</span>
-          <span class="grid-item-tag">Timing</span>
-          <h3 class="grid-item-title">Rhythm & Pacing</h3>
-          <p class="grid-item-desc">Motion timing as a design system. How duration and easing create emotional resonance.</p>
+        <div class="content-item">
+          <div class="item-meta"><span>ANALYSIS</span><span>APR 20, 2026</span></div>
+          <h3 class="item-title">Digital Archiving as Resistance</h3>
+          <p class="item-desc">Why preserving the ephemeral nature of the web is the most radical act a creator can perform today.</p>
         </div>
       </div>
     </section>
 
-    <!-- CONCEPT ARCHIVE MODULE -->
-    <section class="module" id="concept-archive">
-      <div class="hero">
-        <div class="hero-content">
-          <span class="hero-tag">CONCEPT ARCHIVE</span>
-          <h1 class="hero-title">Raw Ideas & Thinking Fragments</h1>
-          <p class="hero-subtitle">Not polished. Not finished. This is where ideas live in their unrefined state—where they're allowed to be confused, contradictory, and evolving.</p>
-          <a class="hero-cta" onclick="discoverMore('concept-archive')">Browse Archive →</a>
-        </div>
+    <!-- THE AGENCY -->
+    <section class="module" id="agency">
+      <div class="section-header">
+        <span class="section-tag">WING 02 — CREATIVE</span>
+        <h1 class="section-title">The Agency</h1>
+        <p class="section-subtitle">We build brands that behave like systems. Strategy-led design for companies that value craft and intelligence.</p>
       </div>
-
-      <div class="grid-section">
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">DRAFT</span>
-          <span class="grid-item-tag">Philosophy</span>
-          <h3 class="grid-item-title">On Creative Process</h3>
-          <p class="grid-item-desc">Unstructured thoughts about how creativity actually works versus how we pretend it works.</p>
+      <div class="content-grid">
+        <div class="content-item">
+          <div class="item-meta"><span>CASE STUDY</span><span>ACTIVE</span></div>
+          <h3 class="item-title">Kova Health — Visual Identity</h3>
+          <p class="item-desc">Developing a modular design system for a healthcare startup focusing on transparency and trust.</p>
         </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">FRAGMENT</span>
-          <span class="grid-item-tag">Observation</span>
-          <h3 class="grid-item-title">System Thinking</h3>
-          <p class="grid-item-desc">Notes on interconnected disciplines and how they inform each other in unexpected ways.</p>
-        </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">EVOLVING</span>
-          <span class="grid-item-tag">Exploration</span>
-          <h3 class="grid-item-title">Failure as Data</h3>
-          <p class="grid-item-desc">What we learned from things that didn't work. The invisible architecture of iteration.</p>
-        </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">ACTIVE</span>
-          <span class="grid-item-tag">Manifesto</span>
-          <h3 class="grid-item-title">Creative Complex Principles</h3>
-          <p class="grid-item-desc">The philosophy behind this system. Why we build this way and what it means.</p>
+        <div class="content-item">
+          <div class="item-meta"><span>STRATEGY</span><span>IN PROGRESS</span></div>
+          <h3 class="item-title">The Future of Brand Voice</h3>
+          <p class="item-desc">Moving beyond generic corporate tones into authentic, human-centric communication systems.</p>
         </div>
       </div>
     </section>
 
-    <!-- EXPERIMENTAL ZONE MODULE -->
-    <section class="module" id="experimental">
-      <div class="hero">
-        <div class="hero-content">
-          <span class="hero-tag">EXPERIMENTAL ZONE</span>
-          <h1 class="hero-title">Unfinished & Evolving Work</h1>
-          <p class="hero-subtitle">This is where rules break. Where we test what happens when systems become unstable. Where chaos is controlled but present.</p>
-          <a class="hero-cta" onclick="discoverMore('experimental')">Enter Zone →</a>
-        </div>
+    <!-- THE PERSPECTIVE -->
+    <section class="module" id="perspective">
+      <div class="section-header">
+        <span class="section-tag">WING 03 — ESSAYS</span>
+        <h1 class="section-title">The Perspective</h1>
+        <p class="section-subtitle">The quietest corner of Motion Desk. Essays, arguments, and reflections that reward slow reading.</p>
       </div>
-
-      <div class="experimental-zone">
-        <div class="experimental-container">
-          <h2 class="experimental-title">SYSTEM INSTABILITY TEST</h2>
-          <p class="experimental-desc">This section intentionally breaks layout rules. The container rotates. Hover to stabilize. This is where we explore what happens when the system becomes unpredictable—but still controlled.</p>
+      <div class="content-grid">
+        <div class="content-item">
+          <div class="item-meta"><span>ESSAY</span><span>APR 29, 2026</span></div>
+          <h3 class="item-title">Notes on Slowness as a Creative Practice</h3>
+          <p class="item-desc">Refusing to hurry in a world that builds its entire personality around speed.</p>
         </div>
-      </div>
-
-      <div class="grid-section">
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">UNSTABLE</span>
-          <span class="grid-item-tag">Experiment</span>
-          <h3 class="grid-item-title">Asymmetric Layouts</h3>
-          <p class="grid-item-desc">What happens when we reject the grid entirely? Controlled chaos that still maintains visual logic.</p>
-        </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">TESTING</span>
-          <span class="grid-item-tag">Interaction</span>
-          <h3 class="grid-item-title">Unexpected Behaviors</h3>
-          <p class="grid-item-desc">Interactions that surprise. Moments where the interface behaves in ways users don't anticipate.</p>
-        </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">EVOLVING</span>
-          <span class="grid-item-tag">Exploration</span>
-          <h3 class="grid-item-title">Hidden Discoveries</h3>
-          <p class="grid-item-desc">Easter eggs and discoverable areas. Rewards for exploration. The interface reveals itself gradually.</p>
-        </div>
-
-        <div class="grid-item" onclick="expandItem(this)">
-          <span class="grid-item-status">ACTIVE</span>
-          <span class="grid-item-tag">System</span>
-          <h3 class="grid-item-title">Delayed Reveals</h3>
-          <p class="grid-item-desc">Content that appears on its own timeline. Information that unfolds based on time, not just interaction.</p>
+        <div class="content-item">
+          <div class="item-meta"><span>OPINION</span><span>APR 24, 2026</span></div>
+          <h3 class="item-title">The Tyranny of the Interesting Life</h3>
+          <p class="item-desc">Confusing a life worth living with a life worth posting. The cost of digital performance.</p>
         </div>
       </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- THE DESK -->
+    <section class="module" id="desk">
+      <div class="section-header">
+        <span class="section-tag">WING 04 — OPERATIONS</span>
+        <h1 class="section-title">The Desk</h1>
+        <p class="section-subtitle">The infrastructure of the complex. Managing the team, the vision, and the architecture of Motion Desk.</p>
+      </div>
+      <div class="content-grid">
+        <div class="content-item">
+          <div class="item-meta"><span>FOUNDER</span><span>SHAURYA SETH</span></div>
+          <h3 class="item-title">System Architecture</h3>
+          <p class="item-desc">"Thinks in systems and platforms — not just participating in things, but building structures where others can."</p>
+        </div>
+        <div class="content-item">
+          <div class="item-meta"><span>CREATIVE LEAD</span><span>AADYA MISHRA</span></div>
+          <h3 class="item-title">Creative Direction</h3>
+          <p class="item-desc">"A rare combination of discipline and creative range to everything she touches."</p>
+        </div>
+      </div>
+    </section>
+
     <footer class="footer">
       <span>© 2026 Motion Desk — A Creative Complex</span>
       <div class="footer-links">
-        <a onclick="switchModule('visual-lab')">Visual Lab</a>
-        <a onclick="switchModule('motion-lab')">Motion Lab</a>
-        <a onclick="switchModule('concept-archive')">Concept Archive</a>
-        <a onclick="switchModule('experimental')">Experimental</a>
+        <a onclick="switchModule('manifold')">System Core</a>
+        <a href="mailto:themotiondesk@gmail.com">Contact</a>
+        <a href="https://instagram.com/themotiondesk">@themotiondesk</a>
       </div>
     </footer>
   </div>
 
-  <!-- HIDDEN TRIGGER -->
   <div class="hidden-trigger" id="hiddenTrigger" onclick="toggleHiddenPanel()">◆</div>
-
-  <!-- HIDDEN PANEL -->
   <div class="hidden-panel" id="hiddenPanel">
-    <div class="hidden-panel-title">System Status</div>
-    <div class="hidden-panel-item">Version: 2.1.0</div>
-    <div class="hidden-panel-item">Status: ACTIVE</div>
-    <div class="hidden-panel-item">Last Updated: May 1, 2026</div>
-    <div class="hidden-panel-item">Modules: 4/4 Online</div>
-    <div class="hidden-panel-item">System Health: Optimal</div>
+    <div class="hidden-panel-title" style="font-family:var(--font-mono); font-size:10px; color:var(--accent-color);">SYSTEM STATUS</div>
+    <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">Version: 2.5.0 (Creative Complex)</div>
+    <div style="font-size:12px; color:var(--text-muted);">Status: ALL WINGS OPERATIONAL</div>
+    <div style="font-size:12px; color:var(--text-muted);">Last Sync: May 1, 2026</div>
   </div>
 
   <script>
     const loadingMessages = [
       'Initializing environment...',
-      'Loading module...',
       'Entering workspace...',
-      'Synchronizing systems...',
-      'Preparing interface...'
+      'Loading module...',
+      'Synchronizing systems...'
     ];
 
-    let currentMessageIndex = 0;
-
     function switchModule(moduleId) {
-      // Show loading overlay
       const overlay = document.getElementById('loadingOverlay');
       const message = document.getElementById('loadingMessage');
       
       overlay.classList.add('active');
-      currentMessageIndex = (currentMessageIndex + 1) % loadingMessages.length;
-      message.textContent = loadingMessages[currentMessageIndex];
+      message.textContent = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
 
-      // Simulate loading time
       setTimeout(() => {
-        // Hide all modules
         document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
-        
-        // Show selected module
         document.getElementById(moduleId).classList.add('active');
         
-        // Update navigation
         document.querySelectorAll('.nav-module-link').forEach(link => {
           link.classList.remove('active');
+          if (link.textContent.toLowerCase().includes(moduleId)) link.classList.add('active');
         });
-        event.target.classList.add('active');
         
-        // Hide loading overlay
         overlay.classList.remove('active');
-        
-        // Scroll to top
-        window.scrollTo(0, 64);
+        window.scrollTo(0, 0);
       }, 600);
     }
 
-    function expandItem(element) {
-      element.style.transform = 'scale(1.05)';
-      setTimeout(() => {
-        element.style.transform = 'scale(1)';
-      }, 300);
-    }
-
-    function discoverMore(moduleId) {
-      const section = document.getElementById(moduleId);
-      const gridSection = section.querySelector('.grid-section');
-      if (gridSection) {
-        gridSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
-
     function toggleHiddenPanel() {
-      const panel = document.getElementById('hiddenPanel');
-      panel.classList.toggle('active');
+      document.getElementById('hiddenPanel').classList.toggle('active');
     }
 
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Close hidden panel when clicking outside
-    document.addEventListener('click', (e) => {
-      const panel = document.getElementById('hiddenPanel');
-      const trigger = document.getElementById('hiddenTrigger');
-      if (!panel.contains(e.target) && !trigger.contains(e.target)) {
-        panel.classList.remove('active');
+    // Initial state
+    window.onload = () => {
+      if (window.location.hash) {
+        const hash = window.location.hash.replace('#', '');
+        if (document.getElementById(hash)) switchModule(hash);
       }
-    });
-
-    // Add scroll-based reveal animation
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.grid-item').forEach(item => {
-      item.style.opacity = '0';
-      item.style.transform = 'translateY(20px)';
-      item.style.transition = 'all 0.6s ease';
-      observer.observe(item);
-    });
+    };
   </script>
 </body>
 </html>
