@@ -6,7 +6,7 @@
   <title>Motion Desk — Creative Complex Interface</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -14,74 +14,83 @@
       --primary-black: #0A0A0A;
       --primary-white: #F8F8F8;
       --accent-color: #FF6B35;
-      --accent-secondary: #4ECDC4;
-      --text-muted: #888888;
+      --text-muted: rgba(255, 255, 255, 0.6);
       --border-subtle: rgba(255, 255, 255, 0.08);
+      
       --font-mono: 'Space Mono', monospace;
       --font-sans: 'Inter', sans-serif;
       --font-display: 'Playfair Display', serif;
-      
+      --font-body: 'Libre Baskerville', serif;
+
+      /* ORIGINAL WING COLORS */
+      --gazette-bg: #0D0D0D;
       --gazette-accent: #F5F0E8;
-      --agency-accent: #C8281E;
-      --perspective-accent: #1B3022;
+      --agency-bg: #C8281E;
+      --agency-dark: #8B1A12;
+      --perspective-bg: #1B3022;
+      --perspective-light: #2A4A35;
+      --desk-bg: #211A12;
       --desk-accent: #C8940A;
+      
+      --current-bg: var(--primary-black);
+      --current-accent: var(--accent-color);
     }
 
     html { scroll-behavior: smooth; }
     body {
       font-family: var(--font-sans);
-      background: var(--primary-black);
+      background: var(--current-bg);
       color: var(--primary-white);
       overflow-x: hidden;
       position: relative;
+      transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     /* AMBIENT ENVIRONMENT */
-    body::before {
-      content: '';
+    .ambient-glow {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: 
-        radial-gradient(ellipse at 20% 50%, rgba(255, 107, 53, 0.03) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(78, 205, 196, 0.02) 0%, transparent 50%);
       pointer-events: none;
       z-index: 0;
-      animation: ambientShift 20s ease-in-out infinite;
+      transition: opacity 1s ease;
     }
 
-    @keyframes ambientShift {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 1.1; }
+    .ambient-glow::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 30%, var(--current-accent), transparent 40%);
+      opacity: 0.05;
+      animation: ambientFloat 20s ease-in-out infinite;
+    }
+
+    @keyframes ambientFloat {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(5%, 5%); }
     }
 
     /* NOISE TEXTURE */
     body::after {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" fill="white" filter="url(%23noise)" opacity="0.02"/></svg>');
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" fill="white" filter="url(%23noise)" opacity="0.02"/></svg>');
       pointer-events: none;
-      z-index: 0;
+      z-index: 1;
     }
 
-    .content-wrapper { position: relative; z-index: 1; }
+    .content-wrapper { position: relative; z-index: 2; }
 
     /* NAVIGATION SYSTEM */
     .nav-system {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 64px;
-      background: rgba(10, 10, 10, 0.95);
-      backdrop-filter: blur(10px);
+      top: 0; left: 0; right: 0;
+      height: 72px;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
@@ -94,181 +103,142 @@
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--accent-color);
+      color: var(--primary-white);
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.3s;
     }
 
-    .nav-modules {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .nav-module-link {
+    .nav-modules { display: flex; gap: 40px; }
+    .nav-link {
       font-family: var(--font-mono);
       font-size: 9px;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--text-muted);
       text-decoration: none;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: color 0.3s;
       position: relative;
-      padding-bottom: 4px;
+      padding: 8px 0;
     }
 
-    .nav-module-link::after {
+    .nav-link:hover, .nav-link.active { color: var(--primary-white); }
+    .nav-link::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: var(--accent-color);
-      transition: width 0.3s;
+      bottom: 0; left: 0; width: 0; height: 1px;
+      background: var(--current-accent);
+      transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
-
-    .nav-module-link:hover { color: var(--accent-color); }
-    .nav-module-link.active { color: var(--accent-color); }
-    .nav-module-link.active::after { width: 100%; }
+    .nav-link.active::after { width: 100%; }
 
     /* LOADING OVERLAY */
     .loading-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(10, 10, 10, 0.8);
-      backdrop-filter: blur(5px);
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--current-bg);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 999;
+      z-index: 2000;
     }
-
     .loading-overlay.active { display: flex; }
-
-    .loading-message {
+    .loading-text {
       font-family: var(--font-mono);
       font-size: 12px;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--accent-color);
-      animation: pulse 1.5s ease-in-out infinite;
+      color: var(--primary-white);
+      animation: pulse 1.5s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
-    }
+    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-    /* MODULE CONTAINER */
-    .module {
-      display: none;
-      min-height: 100vh;
-      padding-top: 64px;
-    }
-
-    .module.active {
-      display: block;
-      animation: moduleEnter 0.8s ease;
-    }
-
-    @keyframes moduleEnter {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* MODULES */
+    .module { display: none; min-height: 100vh; padding-top: 72px; }
+    .module.active { display: block; animation: moduleFade 1s ease; }
+    @keyframes moduleFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     /* MANIFOLD (HOME) */
     .manifold {
-      min-height: calc(100vh - 64px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 80px 60px;
+      padding: 100px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
     }
-
-    .manifold-header { max-width: 900px; margin-bottom: 60px; }
+    .manifold-hero { margin-bottom: 80px; }
     .manifold-tag {
       font-family: var(--font-mono);
       font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      letter-spacing: 0.3em;
       color: var(--accent-color);
-      margin-bottom: 20px;
-      display: inline-block;
-    }
-
-    .manifold-title {
-      font-family: var(--font-display);
-      font-size: clamp(48px, 8vw, 100px);
-      font-weight: 700;
-      line-height: 1;
-      margin-bottom: 32px;
-    }
-
-    .manifold-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-
-    .wing-panel {
-      border: 1px solid var(--border-subtle);
-      padding: 48px;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-      position: relative;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .wing-panel:hover {
-      transform: translateY(-5px);
-      border-color: var(--accent-color);
-      background: rgba(255, 107, 53, 0.05);
-    }
-
-    .wing-panel-tag {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
       margin-bottom: 24px;
       display: block;
     }
-
-    .wing-panel-name {
+    .manifold-title {
       font-family: var(--font-display);
-      font-size: 40px;
-      margin-bottom: 16px;
+      font-size: clamp(48px, 10vw, 120px);
+      line-height: 0.9;
+      margin-bottom: 40px;
+      font-weight: 400;
     }
-
-    .wing-panel-desc {
+    .manifold-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border-subtle);
+      border: 1px solid var(--border-subtle);
+    }
+    .wing-card {
+      background: var(--primary-black);
+      padding: 60px;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      position: relative;
+    }
+    .wing-card:hover { background: rgba(255, 255, 255, 0.03); }
+    .wing-card-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      display: block;
+    }
+    .wing-card-name {
+      font-family: var(--font-display);
+      font-size: 48px;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .wing-card-desc {
+      font-family: var(--font-sans);
       font-size: 15px;
       line-height: 1.6;
       color: var(--text-muted);
-      max-width: 320px;
+      max-width: 300px;
     }
 
-    /* WING SPECIFIC STYLES */
-    .section-header { padding: 80px 60px; border-bottom: 1px solid var(--border-subtle); }
-    .section-tag { font-family: var(--font-mono); font-size: 10px; color: var(--accent-color); margin-bottom: 16px; display: block; }
-    .section-title { font-family: var(--font-display); font-size: 64px; margin-bottom: 24px; }
-    .section-subtitle { font-size: 18px; color: var(--text-muted); max-width: 700px; line-height: 1.6; }
+    /* WING SECTIONS */
+    .wing-header {
+      padding: 120px 60px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .wing-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.3em; margin-bottom: 24px; display: block; }
+    .wing-title { font-family: var(--font-display); font-size: clamp(40px, 6vw, 80px); margin-bottom: 32px; }
+    .wing-subtitle { font-family: var(--font-body); font-size: 20px; font-style: italic; line-height: 1.6; color: var(--text-muted); max-width: 800px; }
 
-    .content-grid { padding: 60px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
-    .content-item { border: 1px solid var(--border-subtle); padding: 40px; transition: all 0.3s; cursor: pointer; }
-    .content-item:hover { border-color: var(--accent-color); background: rgba(255, 255, 255, 0.03); }
-    .item-meta { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); margin-bottom: 16px; display: flex; gap: 16px; }
-    .item-title { font-size: 24px; font-weight: 600; margin-bottom: 12px; }
-    .item-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+    .wing-content { padding: 80px 60px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px; }
+    .content-block {
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border-subtle);
+      transition: transform 0.3s;
+    }
+    .content-block:hover { transform: translateX(10px); }
+    .block-meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 20px; display: flex; gap: 20px; }
+    .block-title { font-family: var(--font-display); font-size: 28px; margin-bottom: 16px; font-weight: 700; }
+    .block-text { font-family: var(--font-sans); font-size: 15px; line-height: 1.7; color: var(--text-muted); }
 
     /* FOOTER */
     .footer {
@@ -279,245 +249,258 @@
       align-items: center;
       font-family: var(--font-mono);
       font-size: 10px;
+      letter-spacing: 0.1em;
       color: var(--text-muted);
-      text-transform: uppercase;
     }
-
-    .footer-links { display: flex; gap: 32px; }
+    .footer-links { display: flex; gap: 40px; }
     .footer-links a { color: var(--text-muted); text-decoration: none; cursor: pointer; transition: color 0.3s; }
-    .footer-links a:hover { color: var(--accent-color); }
+    .footer-links a:hover { color: var(--primary-white); }
 
-    /* HIDDEN TRIGGER */
-    .hidden-trigger {
+    /* SYSTEM UI */
+    .status-trigger {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
+      bottom: 32px; right: 32px;
+      width: 48px; height: 48px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-subtle);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 1100;
       font-size: 20px;
-      z-index: 500;
+      transition: all 0.3s;
     }
+    .status-trigger:hover { border-color: var(--current-accent); color: var(--current-accent); }
 
-    .hidden-panel {
+    .status-panel {
       position: fixed;
-      bottom: 70px;
-      right: 20px;
-      width: 300px;
-      background: rgba(10, 10, 10, 0.95);
+      bottom: 96px; right: 32px;
+      width: 320px;
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(20px);
       border: 1px solid var(--border-subtle);
-      padding: 20px;
-      backdrop-filter: blur(10px);
+      padding: 32px;
       display: none;
       flex-direction: column;
-      gap: 12px;
-      z-index: 500;
+      gap: 16px;
+      z-index: 1100;
     }
+    .status-panel.active { display: flex; animation: panelSlide 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+    @keyframes panelSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .status-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--current-accent); }
+    .status-item { font-family: var(--font-sans); font-size: 13px; color: var(--text-muted); display: flex; justify-content: space-between; }
 
-    .hidden-panel.active { display: flex; }
-
-    @media (max-width: 768px) {
-      .manifold-grid, .content-grid { grid-template-columns: 1fr; }
-      .section-title { font-size: 40px; }
+    @media (max-width: 900px) {
+      .manifold-grid, .wing-content { grid-template-columns: 1fr; }
+      .nav-modules { display: none; }
+      .manifold, .wing-header, .wing-content { padding: 60px 30px; }
     }
   </style>
 </head>
 <body>
+  <div class="ambient-glow"></div>
+  
   <div class="content-wrapper">
     <nav class="nav-system">
       <a class="nav-logo" onclick="switchModule('manifold')">MOTION DESK</a>
       <div class="nav-modules">
-        <a class="nav-module-link" onclick="switchModule('gazette')">The Gazette</a>
-        <a class="nav-module-link" onclick="switchModule('agency')">The Agency</a>
-        <a class="nav-module-link" onclick="switchModule('perspective')">The Perspective</a>
-        <a class="nav-module-link" onclick="switchModule('desk')">The Desk</a>
+        <a class="nav-link" onclick="switchModule('gazette')">Gazette</a>
+        <a class="nav-link" onclick="switchModule('agency')">Agency</a>
+        <a class="nav-link" onclick="switchModule('perspective')">Perspective</a>
+        <a class="nav-link" onclick="switchModule('desk')">Desk</a>
       </div>
     </nav>
 
-    <div class="loading-overlay" id="loadingOverlay">
-      <div class="loading-message" id="loadingMessage">Initializing environment...</div>
+    <div class="loading-overlay" id="loader">
+      <div class="loading-text" id="loaderText">Initializing...</div>
     </div>
 
-    <!-- MANIFOLD MODULE -->
+    <!-- MANIFOLD -->
     <section class="module active" id="manifold">
       <div class="manifold">
-        <div class="manifold-header">
-          <span class="manifold-tag">SYSTEM CORE</span>
-          <h1 class="manifold-title">Motion Desk — A Creative Complex.</h1>
-          <p class="section-subtitle">A dynamic, multi-layered digital environment where creativity is actively happening, evolving, and mutating in real time.</p>
+        <div class="manifold-hero">
+          <span class="manifold-tag">CREATIVE COMPLEX // V3.0</span>
+          <h1 class="manifold-title">The Manifold.</h1>
+          <p class="wing-subtitle">Four wings. One publication. A system where creativity is continuously constructed, deconstructed, and redefined.</p>
         </div>
         <div class="manifold-grid">
-          <div class="wing-panel" onclick="switchModule('gazette')">
-            <span class="wing-panel-tag">WING 01</span>
-            <h2 class="wing-panel-name">The Gazette</h2>
-            <p class="wing-panel-desc">An independent media wing focusing on long-form journalism, culture, and digital ecosystems.</p>
+          <div class="wing-card" onclick="switchModule('gazette')">
+            <span class="wing-card-tag">WING_01</span>
+            <h2 class="wing-card-name">The Gazette</h2>
+            <p class="wing-card-desc">Independent media exploring culture, technology, and the architecture of ideas.</p>
           </div>
-          <div class="wing-panel" onclick="switchModule('agency')">
-            <span class="wing-panel-tag">WING 02</span>
-            <h2 class="wing-panel-name">The Agency</h2>
-            <p class="wing-panel-desc">A creative laboratory for brands, specializing in visual identity, strategy, and digital experiences.</p>
+          <div class="wing-card" onclick="switchModule('agency')">
+            <span class="wing-card-tag">WING_02</span>
+            <h2 class="wing-card-name">The Agency</h2>
+            <p class="wing-card-desc">Strategic creative laboratory building brands that behave like living systems.</p>
           </div>
-          <div class="wing-panel" onclick="switchModule('perspective')">
-            <span class="wing-panel-tag">WING 03</span>
-            <h2 class="wing-panel-name">The Perspective</h2>
-            <p class="wing-panel-desc">A space for essays, opinion pieces, and deep analysis on the architecture of ideas.</p>
+          <div class="wing-card" onclick="switchModule('perspective')">
+            <span class="wing-card-tag">WING_03</span>
+            <h2 class="wing-card-name">The Perspective</h2>
+            <p class="wing-card-desc">The quiet corner. Essays and reflections that reward slow reading and deep thought.</p>
           </div>
-          <div class="wing-panel" onclick="switchModule('desk')">
-            <span class="wing-panel-tag">WING 04</span>
-            <h2 class="wing-panel-name">The Desk</h2>
-            <p class="wing-panel-desc">The operational core. Managing systems, people, and the evolution of the complex.</p>
+          <div class="wing-card" onclick="switchModule('desk')">
+            <span class="wing-card-tag">WING_04</span>
+            <h2 class="wing-card-name">The Desk</h2>
+            <p class="wing-card-desc">Operational core. Managing the people, processes, and evolution of the complex.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- THE GAZETTE -->
+    <!-- GAZETTE -->
     <section class="module" id="gazette">
-      <div class="section-header">
-        <span class="section-tag">WING 01 — MEDIA</span>
-        <h1 class="section-title">The Gazette</h1>
-        <p class="section-subtitle">Reporting on the intersection of culture, technology, and the creative process. Independent journalism for the digital age.</p>
+      <div class="wing-header">
+        <span class="wing-tag">WING_01 // MEDIA</span>
+        <h1 class="wing-title">The Gazette</h1>
+        <p class="wing-subtitle">Reporting on the intersection of culture and the digital age. We value depth over speed.</p>
       </div>
-      <div class="content-grid">
-        <div class="content-item">
-          <div class="item-meta"><span>ISSUE 04</span><span>APR 28, 2026</span></div>
-          <h3 class="item-title">The Attention Economy & The Death of Depth</h3>
-          <p class="item-desc">How our current media landscape is optimized for speed over significance, and what we lose in the process.</p>
+      <div class="wing-content">
+        <div class="content-block">
+          <div class="block-meta"><span>ISSUE_04</span><span>APR 28, 2026</span></div>
+          <h3 class="block-title">The Death of Depth</h3>
+          <p class="block-text">How our current media landscape is optimized for speed over significance, and what we lose in the process.</p>
         </div>
-        <div class="content-item">
-          <div class="item-meta"><span>ANALYSIS</span><span>APR 20, 2026</span></div>
-          <h3 class="item-title">Digital Archiving as Resistance</h3>
-          <p class="item-desc">Why preserving the ephemeral nature of the web is the most radical act a creator can perform today.</p>
+        <div class="content-block">
+          <div class="block-meta"><span>ANALYSIS</span><span>APR 20, 2026</span></div>
+          <h3 class="block-title">Digital Archiving</h3>
+          <p class="block-text">Why preserving the ephemeral nature of the web is the most radical act a creator can perform today.</p>
         </div>
       </div>
     </section>
 
-    <!-- THE AGENCY -->
+    <!-- AGENCY -->
     <section class="module" id="agency">
-      <div class="section-header">
-        <span class="section-tag">WING 02 — CREATIVE</span>
-        <h1 class="section-title">The Agency</h1>
-        <p class="section-subtitle">We build brands that behave like systems. Strategy-led design for companies that value craft and intelligence.</p>
+      <div class="wing-header">
+        <span class="wing-tag">WING_02 // CREATIVE</span>
+        <h1 class="wing-title">The Agency</h1>
+        <p class="wing-subtitle">We build brands with soul and systems. Strategy-led design for the modern era.</p>
       </div>
-      <div class="content-grid">
-        <div class="content-item">
-          <div class="item-meta"><span>CASE STUDY</span><span>ACTIVE</span></div>
-          <h3 class="item-title">Kova Health — Visual Identity</h3>
-          <p class="item-desc">Developing a modular design system for a healthcare startup focusing on transparency and trust.</p>
+      <div class="wing-content">
+        <div class="content-block">
+          <div class="block-meta"><span>CASE_STUDY</span><span>ACTIVE</span></div>
+          <h3 class="block-title">Kova Health</h3>
+          <p class="block-text">Developing a modular design system for a healthcare startup focusing on transparency and trust.</p>
         </div>
-        <div class="content-item">
-          <div class="item-meta"><span>STRATEGY</span><span>IN PROGRESS</span></div>
-          <h3 class="item-title">The Future of Brand Voice</h3>
-          <p class="item-desc">Moving beyond generic corporate tones into authentic, human-centric communication systems.</p>
+        <div class="content-block">
+          <div class="block-meta"><span>STRATEGY</span><span>IN_PROGRESS</span></div>
+          <h3 class="block-title">Brand Voice Architecture</h3>
+          <p class="block-text">Moving beyond generic corporate tones into authentic, human-centric communication systems.</p>
         </div>
       </div>
     </section>
 
-    <!-- THE PERSPECTIVE -->
+    <!-- PERSPECTIVE -->
     <section class="module" id="perspective">
-      <div class="section-header">
-        <span class="section-tag">WING 03 — ESSAYS</span>
-        <h1 class="section-title">The Perspective</h1>
-        <p class="section-subtitle">The quietest corner of Motion Desk. Essays, arguments, and reflections that reward slow reading.</p>
+      <div class="wing-header">
+        <span class="wing-tag">WING_03 // ESSAYS</span>
+        <h1 class="wing-title">The Perspective</h1>
+        <p class="wing-subtitle">Essays, arguments, and reflections that reward slow reading. Voices that matter.</p>
       </div>
-      <div class="content-grid">
-        <div class="content-item">
-          <div class="item-meta"><span>ESSAY</span><span>APR 29, 2026</span></div>
-          <h3 class="item-title">Notes on Slowness as a Creative Practice</h3>
-          <p class="item-desc">Refusing to hurry in a world that builds its entire personality around speed.</p>
+      <div class="wing-content">
+        <div class="content-block">
+          <div class="block-meta"><span>ESSAY</span><span>APR 29, 2026</span></div>
+          <h3 class="block-title">Notes on Slowness</h3>
+          <p class="block-text">Refusing to hurry in a world that builds its entire personality around speed. A creative practice.</p>
         </div>
-        <div class="content-item">
-          <div class="item-meta"><span>OPINION</span><span>APR 24, 2026</span></div>
-          <h3 class="item-title">The Tyranny of the Interesting Life</h3>
-          <p class="item-desc">Confusing a life worth living with a life worth posting. The cost of digital performance.</p>
+        <div class="content-block">
+          <div class="block-meta"><span>OPINION</span><span>APR 24, 2026</span></div>
+          <h3 class="block-title">Tyranny of Interest</h3>
+          <p class="block-text">Confusing a life worth living with a life worth posting. The cost of digital performance.</p>
         </div>
       </div>
     </section>
 
-    <!-- THE DESK -->
+    <!-- DESK -->
     <section class="module" id="desk">
-      <div class="section-header">
-        <span class="section-tag">WING 04 — OPERATIONS</span>
-        <h1 class="section-title">The Desk</h1>
-        <p class="section-subtitle">The infrastructure of the complex. Managing the team, the vision, and the architecture of Motion Desk.</p>
+      <div class="wing-header">
+        <span class="wing-tag">WING_04 // OPERATIONS</span>
+        <h1 class="wing-title">The Desk</h1>
+        <p class="wing-subtitle">The infrastructure. Managing the team, the vision, and the architecture of the complex.</p>
       </div>
-      <div class="content-grid">
-        <div class="content-item">
-          <div class="item-meta"><span>FOUNDER</span><span>SHAURYA SETH</span></div>
-          <h3 class="item-title">System Architecture</h3>
-          <p class="item-desc">"Thinks in systems and platforms — not just participating in things, but building structures where others can."</p>
+      <div class="wing-content">
+        <div class="content-block">
+          <div class="block-meta"><span>FOUNDER</span><span>SHAURYA SETH</span></div>
+          <h3 class="block-title">System Architecture</h3>
+          <p class="block-text">"Thinks in systems and platforms — building structures where others can thrive."</p>
         </div>
-        <div class="content-item">
-          <div class="item-meta"><span>CREATIVE LEAD</span><span>AADYA MISHRA</span></div>
-          <h3 class="item-title">Creative Direction</h3>
-          <p class="item-desc">"A rare combination of discipline and creative range to everything she touches."</p>
+        <div class="content-block">
+          <div class="block-meta"><span>CREATIVE_LEAD</span><span>AADYA MISHRA</span></div>
+          <h3 class="block-title">Creative Direction</h3>
+          <p class="block-text">"A rare combination of discipline and creative range in everything she touches."</p>
         </div>
       </div>
     </section>
 
     <footer class="footer">
-      <span>© 2026 Motion Desk — A Creative Complex</span>
+      <span>© 2026 MOTION DESK</span>
       <div class="footer-links">
-        <a onclick="switchModule('manifold')">System Core</a>
-        <a href="mailto:themotiondesk@gmail.com">Contact</a>
-        <a href="https://instagram.com/themotiondesk">@themotiondesk</a>
+        <a onclick="switchModule('manifold')">SYSTEM_CORE</a>
+        <a href="mailto:themotiondesk@gmail.com">CONTACT</a>
+        <a href="https://instagram.com/themotiondesk">INSTAGRAM</a>
       </div>
     </footer>
   </div>
 
-  <div class="hidden-trigger" id="hiddenTrigger" onclick="toggleHiddenPanel()">◆</div>
-  <div class="hidden-panel" id="hiddenPanel">
-    <div class="hidden-panel-title" style="font-family:var(--font-mono); font-size:10px; color:var(--accent-color);">SYSTEM STATUS</div>
-    <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">Version: 2.5.0 (Creative Complex)</div>
-    <div style="font-size:12px; color:var(--text-muted);">Status: ALL WINGS OPERATIONAL</div>
-    <div style="font-size:12px; color:var(--text-muted);">Last Sync: May 1, 2026</div>
+  <div class="status-trigger" onclick="toggleStatus()">◆</div>
+  <div class="status-panel" id="statusPanel">
+    <div class="status-label">SYSTEM_STATUS</div>
+    <div class="status-item"><span>VERSION</span><span>3.1.0</span></div>
+    <div class="status-item"><span>WINGS</span><span>4/4 ONLINE</span></div>
+    <div class="status-item"><span>ENVIRONMENT</span><span>STABLE</span></div>
+    <div class="status-item"><span>LAST_SYNC</span><span>MAY 1, 2026</span></div>
   </div>
 
   <script>
-    const loadingMessages = [
+    const themes = {
+      manifold: { bg: '#0A0A0A', accent: '#FF6B35' },
+      gazette: { bg: '#0D0D0D', accent: '#F5F0E8' },
+      agency: { bg: '#C8281E', accent: '#8B1A12' },
+      perspective: { bg: '#1B3022', accent: '#2A4A35' },
+      desk: { bg: '#211A12', accent: '#C8940A' }
+    };
+
+    const loaderMessages = [
       'Initializing environment...',
       'Entering workspace...',
-      'Loading module...',
-      'Synchronizing systems...'
+      'Synchronizing systems...',
+      'Loading module...'
     ];
 
-    function switchModule(moduleId) {
-      const overlay = document.getElementById('loadingOverlay');
-      const message = document.getElementById('loadingMessage');
+    function switchModule(id) {
+      const loader = document.getElementById('loader');
+      const loaderText = document.getElementById('loaderText');
       
-      overlay.classList.add('active');
-      message.textContent = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
+      loader.classList.add('active');
+      loaderText.textContent = loaderMessages[Math.floor(Math.random() * loaderMessages.length)];
+      
+      // Update theme variables
+      const theme = themes[id];
+      document.documentElement.style.setProperty('--current-bg', theme.bg);
+      document.documentElement.style.setProperty('--current-accent', theme.accent);
 
       setTimeout(() => {
         document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
-        document.getElementById(moduleId).classList.add('active');
+        document.getElementById(id).classList.add('active');
         
-        document.querySelectorAll('.nav-module-link').forEach(link => {
-          link.classList.remove('active');
-          if (link.textContent.toLowerCase().includes(moduleId)) link.classList.add('active');
+        document.querySelectorAll('.nav-link').forEach(l => {
+          l.classList.remove('active');
+          if (l.textContent.toLowerCase() === id) l.classList.add('active');
         });
-        
-        overlay.classList.remove('active');
+
+        loader.classList.remove('active');
         window.scrollTo(0, 0);
-      }, 600);
+      }, 700);
     }
 
-    function toggleHiddenPanel() {
-      document.getElementById('hiddenPanel').classList.toggle('active');
+    function toggleStatus() {
+      document.getElementById('statusPanel').classList.toggle('active');
     }
 
-    // Initial state
-    window.onload = () => {
-      if (window.location.hash) {
-        const hash = window.location.hash.replace('#', '');
-        if (document.getElementById(hash)) switchModule(hash);
+    // Close status on click outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.status-panel') && !e.target.closest('.status-trigger')) {
+        document.getElementById('statusPanel').classList.remove('active');
       }
-    };
+    });
   </script>
 </body>
 </html>
