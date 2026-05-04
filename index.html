@@ -42,7 +42,6 @@
       
       --current-bg: var(--home-bg);
       --current-text: var(--home-text);
-      --current-accent: var(--home-accent);
     }
 
     body {
@@ -56,49 +55,24 @@
 
     /* FOREST STAGE FOR PERSPECTIVE */
     .forest-stage {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1.2s ease;
-      overflow: hidden;
+      position: fixed; inset: 0; z-index: 1; opacity: 0; pointer-events: none;
+      transition: opacity 1.2s ease; overflow: hidden;
       background: linear-gradient(180deg, #091408 0%, #0f2214 30%, #142a18 65%, #0d1a10 100%);
     }
     body.perspective-active .forest-stage { opacity: 1; }
-
     .rays { position: absolute; inset: 0; pointer-events: none; }
-    .ray {
-      position: absolute; top: 0; width: 3px; height: 65%;
-      background: linear-gradient(to bottom, rgba(138,171,143,0.06), transparent);
-      transform-origin: top center;
-    }
-
+    .ray { position: absolute; top: 0; width: 3px; height: 65%; background: linear-gradient(to bottom, rgba(138,171,143,0.06), transparent); transform-origin: top center; }
     #leaf-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 10; }
-    .ground-mist {
-      position: absolute; bottom: 0; left: 0; right: 0; height: 250px;
-      background: linear-gradient(to top, rgba(10,22,13,0.95) 0%, rgba(10,22,13,0.4) 50%, transparent 100%);
-      z-index: 11;
-    }
-    .top-vignette {
-      position: absolute; top: 0; left: 0; right: 0; height: 220px;
-      background: linear-gradient(to bottom, rgba(9,20,8,0.8) 0%, transparent 100%);
-      z-index: 11;
-    }
+    .ground-mist { position: absolute; bottom: 0; left: 0; right: 0; height: 250px; background: linear-gradient(to top, rgba(10,22,13,0.95) 0%, rgba(10,22,13,0.4) 50%, transparent 100%); z-index: 11; }
+    .top-vignette { position: absolute; top: 0; left: 0; right: 0; height: 220px; background: linear-gradient(to bottom, rgba(9,20,8,0.8) 0%, transparent 100%); z-index: 11; }
 
     .content-wrapper { position: relative; z-index: 100; }
 
     /* NAVIGATION */
     .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 60px;
-      z-index: 1000;
-      transition: background 0.4s;
+      position: fixed; top: 0; left: 0; right: 0; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; z-index: 1000; transition: background 0.4s;
     }
     body.perspective-active .nav { background: rgba(9,20,8,0.5); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(107,143,113,0.1); }
     
@@ -115,89 +89,69 @@
     .home { padding: 120px 60px; max-width: 1400px; margin: 0 auto; }
     .home-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.3em; margin-bottom: 24px; display: block; }
     .home-title { font-family: var(--font-display); font-size: clamp(60px, 12vw, 160px); line-height: 0.85; margin-bottom: 60px; font-weight: 400; }
-    
     .wing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
-    .wing-box { 
-      padding: 60px; border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: all 0.4s;
-      background: rgba(0,0,0,0.02);
-    }
+    .wing-box { padding: 60px; border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: all 0.4s; background: rgba(0,0,0,0.02); }
     .wing-box:hover { background: white; transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
     .wing-box-name { font-family: var(--font-display); font-size: 40px; margin-bottom: 20px; font-style: italic; }
     .wing-box-desc { font-size: 15px; line-height: 1.6; opacity: 0.7; max-width: 300px; }
 
-    /* PERSPECTIVE WING */
-    .perspective-hero {
-      min-height: calc(100vh - 80px);
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      text-align: center; padding: 0 2rem;
-    }
+    /* SHARED WING STYLES */
+    .wing-hero { padding: 120px 60px; border-bottom: 1px solid var(--border-subtle); max-width: 1400px; margin: 0 auto; }
+    .wing-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.4em; margin-bottom: 24px; display: block; }
+    .wing-h1 { font-family: var(--font-display); font-size: clamp(40px, 8vw, 100px); margin-bottom: 32px; }
+    .wing-p { font-family: var(--font-body); font-size: 20px; font-style: italic; opacity: 0.8; max-width: 800px; line-height: 1.6; }
+    
+    .content-section { padding: 80px 60px; max-width: 1400px; margin: 0 auto; }
+    .content-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px; }
+    .card { padding-bottom: 40px; border-bottom: 1px solid var(--border-subtle); cursor: pointer; transition: 0.3s; }
+    .card:hover { transform: translateX(10px); }
+    .card-meta { font-family: var(--font-mono); font-size: 10px; opacity: 0.6; margin-bottom: 20px; display: flex; gap: 20px; }
+    .card-title { font-family: var(--font-display); font-size: 32px; margin-bottom: 16px; }
+    .card-desc { font-size: 15px; line-height: 1.7; opacity: 0.7; }
+
+    /* PERSPECTIVE HERO & ESSAYS */
+    .perspective-hero { min-height: calc(100vh - 80px); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 2rem; }
     .hero-eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.4em; color: var(--sage); margin-bottom: 2rem; opacity: 0; transform: translateY(20px); transition: 1s ease 0.4s; }
     .hero-title { font-family: var(--font-serif); font-size: clamp(3.5rem, 10vw, 7.5rem); font-weight: 300; line-height: 1; color: var(--perspective-text); opacity: 0; transform: translateY(30px); transition: 1.2s ease 0.6s; }
     .hero-title-italic { font-family: var(--font-serif); font-size: clamp(3.5rem, 10vw, 7.5rem); font-weight: 300; font-style: italic; color: var(--sage); opacity: 0; transform: translateY(30px); transition: 1.2s ease 0.8s; }
     .hero-rule { width: 1px; height: 60px; background: linear-gradient(to bottom, var(--sage), transparent); margin: 3rem auto; opacity: 0; transition: 1s ease 1s; }
-    
-    body.perspective-active .hero-eyebrow, 
-    body.perspective-active .hero-title, 
-    body.perspective-active .hero-title-italic,
-    body.perspective-active .hero-rule { opacity: 1; transform: translateY(0); }
+    body.perspective-active .hero-eyebrow, body.perspective-active .hero-title, body.perspective-active .hero-title-italic, body.perspective-active .hero-rule { opacity: 1; transform: translateY(0); }
 
-    .essays-section { max-width: 700px; margin: 0 auto; padding: 0 2rem 10rem; }
-    .featured-essay {
-      border: 1px solid rgba(107,143,113,0.2); padding: 4rem; margin-bottom: 2rem;
-      background: rgba(10,26,13,0.4); backdrop-filter: blur(20px);
-      cursor: pointer; transition: 0.4s;
-    }
+    .featured-essay { border: 1px solid rgba(107,143,113,0.2); padding: 4rem; margin-bottom: 2rem; background: rgba(10,26,13,0.4); backdrop-filter: blur(20px); cursor: pointer; transition: 0.4s; }
     .featured-essay:hover { border-color: var(--sage); background: rgba(10,26,13,0.6); transform: translateY(-5px); }
     .featured-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.3em; color: var(--sage); margin-bottom: 1.5rem; display: block; }
     .featured-title { font-family: var(--font-serif); font-size: 2.5rem; line-height: 1.2; margin-bottom: 1.5rem; }
     .featured-excerpt { font-family: var(--font-serif); font-size: 1.2rem; font-style: italic; opacity: 0.4; line-height: 1.8; margin-bottom: 2rem; }
-    
-    .essay-card {
-      padding: 2.5rem 0; border-top: 1px solid rgba(107,143,113,0.1);
-      cursor: pointer; transition: 0.4s;
-    }
-    .essay-card:hover .card-title { color: var(--sage); transform: translateX(10px); }
-    .card-meta { font-family: var(--font-mono); font-size: 9px; color: var(--sage); margin-bottom: 1rem; display: flex; gap: 1.5rem; opacity: 0.6; }
-    .card-title { font-family: var(--font-serif); font-size: 1.8rem; transition: 0.4s; }
 
-    /* ESSAY READER - REFINED TYPOGRAPHY */
-    .essay-reader {
-      position: fixed; inset: 0; background: var(--perspective-bg); z-index: 2000;
-      display: none; overflow-y: auto; padding: 120px 2rem;
-    }
+    /* ESSAY READER */
+    .essay-reader { position: fixed; inset: 0; background: var(--perspective-bg); z-index: 2000; display: none; overflow-y: auto; padding: 120px 2rem; }
     .essay-reader.active { display: block; }
     .reader-close { position: fixed; top: 40px; right: 60px; font-family: var(--font-mono); font-size: 10px; cursor: pointer; letter-spacing: 0.3em; opacity: 0.5; transition: 0.3s; }
     .reader-close:hover { opacity: 1; }
     .reader-container { max-width: 760px; margin: 0 auto; }
-    
-    .reader-title { 
-      font-family: var(--font-serif); 
-      font-size: clamp(2.5rem, 6vw, 4rem); 
-      font-weight: 300; 
-      line-height: 1.1; 
-      margin-bottom: 4rem; 
-      color: var(--perspective-text);
-    }
-    
-    .reader-body { 
-      font-family: var(--font-serif); 
-      font-size: 1.25rem; 
-      font-weight: 300; 
-      line-height: 2; 
-      color: rgba(250,250,248,0.7); 
-      letter-spacing: 0.01em;
-    }
+    .reader-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 300; line-height: 1.1; margin-bottom: 4rem; color: var(--perspective-text); }
+    .reader-body { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 300; line-height: 2; color: rgba(250,250,248,0.7); letter-spacing: 0.01em; }
     .reader-body p { margin-bottom: 2.5rem; }
 
-    /* OTHER WINGS */
-    .wing-hero { padding: 120px 60px; border-bottom: 1px solid var(--border-subtle); }
-    .wing-h1 { font-family: var(--font-display); font-size: clamp(40px, 8vw, 100px); margin-bottom: 32px; }
+    /* DESK / ABOUT */
+    .founder-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-top: 60px; }
+    .founder-card { padding: 40px; border: 1px solid var(--border-subtle); background: rgba(255,255,255,0.02); }
+    .founder-name { font-family: var(--font-display); font-size: 32px; margin-bottom: 8px; }
+    .founder-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.5; margin-bottom: 24px; display: block; }
+    .founder-bio { font-size: 14px; line-height: 1.8; opacity: 0.7; margin-bottom: 24px; }
+    .founder-quote { font-family: var(--font-body); font-style: italic; font-size: 16px; opacity: 0.9; border-left: 2px solid var(--home-accent); padding-left: 20px; }
+
+    /* FOOTER */
+    .footer { padding: 80px 60px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
+    .footer-brand { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; opacity: 0.4; }
+    .footer-links { display: flex; gap: 30px; }
+    .footer-link { font-family: var(--font-mono); font-size: 10px; text-decoration: none; color: inherit; opacity: 0.6; transition: 0.3s; }
+    .footer-link:hover { opacity: 1; }
 
     @media (max-width: 900px) {
-      .wing-grid { grid-template-columns: 1fr; }
+      .wing-grid, .content-grid, .founder-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
-      .home, .wing-hero { padding: 60px 30px; }
+      .home, .wing-hero, .content-section, .footer { padding: 60px 30px; }
       .featured-essay { padding: 2rem; }
     }
   </style>
@@ -207,9 +161,7 @@
   <div class="forest-stage">
     <div class="rays" id="rays"></div>
     <svg class="forest-svg" width="100%" height="100%" viewBox="0 0 1440 640" preserveAspectRatio="xMidYMax slice" style="position:absolute; bottom:0; left:0; width:100%; opacity:0.25;">
-      <defs>
-        <linearGradient id="n1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#2a4e34"/><stop offset="100%" stop-color="#0d1a10"/></linearGradient>
-      </defs>
+      <defs><linearGradient id="n1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#2a4e34"/><stop offset="100%" stop-color="#0d1a10"/></linearGradient></defs>
       <g opacity="0.8">
         <ellipse cx="200" cy="400" rx="120" ry="200" fill="url(#n1)"/><rect x="185" y="550" width="30" height="100" fill="#0d1b0b"/>
         <ellipse cx="600" cy="350" rx="140" ry="220" fill="url(#n1)"/><rect x="582" y="550" width="36" height="120" fill="#0c1a0a"/>
@@ -262,16 +214,73 @@
     <!-- GAZETTE -->
     <section class="module" id="gazette">
       <div class="wing-hero">
+        <span class="wing-label">WING_01 // MEDIA</span>
         <h1 class="wing-h1">The Gazette</h1>
-        <p style="font-family:var(--font-body); font-size:20px; font-style:italic; opacity:0.6;">Independent journalism for the digital age.</p>
+        <p class="wing-p">Sharp reporting, editorial analysis, and the stories that shape the conversation. We value depth over speed.</p>
+      </div>
+      <div class="content-section">
+        <div class="content-grid">
+          <div class="card">
+            <div class="card-meta"><span>COVER STORY</span><span>APR 28, 2026</span></div>
+            <h3 class="card-title">The Architecture of Attention</h3>
+            <p class="card-desc">How media learned to manufacture urgency in an era of infinite scroll and algorithmic feeds.</p>
+          </div>
+          <div class="card">
+            <div class="card-meta"><span>ANALYSIS</span><span>APR 26, 2026</span></div>
+            <h3 class="card-title">Why Every Brand Sounds the Same</h3>
+            <p class="card-desc">The homogenization of corporate voice and what it means for authentic communication.</p>
+          </div>
+          <div class="card">
+            <div class="card-meta"><span>REPORTING</span><span>APR 24, 2026</span></div>
+            <h3 class="card-title">The Newsletter Economy</h3>
+            <p class="card-desc">Independent writers are building sustainable businesses outside legacy media structures.</p>
+          </div>
+          <div class="card">
+            <div class="card-meta"><span>FEATURE</span><span>APR 22, 2026</span></div>
+            <h3 class="card-title">Inside Content Factories</h3>
+            <p class="card-desc">A look at the invisible infrastructure behind the posts that fill your feed every morning.</p>
+          </div>
+        </div>
+        <div style="margin-top: 80px; text-align: center;">
+          <p style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; opacity:0.5; margin-bottom:20px;">HAVE A STORY WORTH TELLING?</p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyYm2V1PZqW-n6V-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ/viewform" target="_blank" style="font-family:var(--font-mono); font-size:12px; color:inherit; text-decoration:underline;">PITCH THE GAZETTE →</a>
+        </div>
       </div>
     </section>
 
     <!-- AGENCY -->
     <section class="module" id="agency">
       <div class="wing-hero">
+        <span class="wing-label">WING_02 // CREATIVE</span>
         <h1 class="wing-h1">The Agency</h1>
-        <p style="font-family:var(--font-body); font-size:20px; font-style:italic; opacity:0.6;">Building brands that behave like systems.</p>
+        <p class="wing-p">Strategic creative laboratory. We build brands with soul and systems. Strategy, writing, and creative direction.</p>
+      </div>
+      <div class="content-section">
+        <div class="content-grid">
+          <div class="card">
+            <div class="card-meta"><span>CASE STUDY</span><span>2026</span></div>
+            <h3 class="card-title">Kova Health</h3>
+            <p class="card-desc">A launch campaign built around real patient stories that drove 40% above projected sign-ups.</p>
+          </div>
+          <div class="card">
+            <div class="card-meta"><span>CASE STUDY</span><span>2025</span></div>
+            <h3 class="card-title">Meridian Studio</h3>
+            <p class="card-desc">Rebuilding a creative studio's voice from the ground up, tripling inbound inquiries in four months.</p>
+          </div>
+          <div class="card">
+            <div class="card-meta"><span>CASE STUDY</span><span>2025</span></div>
+            <h3 class="card-title">Volta Magazine</h3>
+            <p class="card-desc">Turning a print legacy into a digital-first publication with 8,000 subscribers in 90 days.</p>
+          </div>
+          <div class="card" style="border: 1px dashed var(--border-subtle); display: flex; align-items: center; justify-content: center; padding: 40px;">
+            <p style="font-family:var(--font-mono); font-size:12px; opacity:0.5;">YOUR PROJECT HERE?</p>
+          </div>
+        </div>
+        <div style="margin-top: 80px; border-top: 1px solid var(--border-subtle); padding-top: 60px;">
+          <h2 style="font-family:var(--font-display); font-size:40px; margin-bottom:20px;">We make things move.</h2>
+          <p style="font-size:16px; opacity:0.7; max-width:600px; margin-bottom:40px;">Strategy, writing, and creative direction for brands that want to say something worth hearing. We work with clients who are building something real.</p>
+          <a href="mailto:themotiondesk@gmail.com" style="font-family:var(--font-mono); font-size:12px; color:inherit; text-decoration:underline;">WORK WITH US →</a>
+        </div>
       </div>
     </section>
 
@@ -283,20 +292,24 @@
         <div class="hero-title-italic">finds its voice.</div>
         <div class="hero-rule"></div>
       </div>
-      <div class="essays-section">
+      <div class="content-section" style="padding-top:0;">
         <div class="featured-essay" onclick="openEssay('slowness')">
           <span class="featured-label">Featured Essay</span>
           <h2 class="featured-title">Notes on Slowness as a Creative Practice</h2>
           <p class="featured-excerpt">"Slowness, then, feels like rebellion. Not the loud kind. The quiet, stubborn kind."</p>
           <div style="font-family:var(--font-mono); font-size:9px; color:var(--sage); letter-spacing:0.1em;">Shaurya Seth · 12 min read</div>
         </div>
-        <div class="essay-card">
-          <div class="card-meta"><span>OPINION</span><span>APRIL 2026</span></div>
-          <h3 class="card-title">Why Every Brand Sounds the Same Now</h3>
-        </div>
-        <div class="essay-card">
-          <div class="card-meta"><span>ANALYSIS</span><span>MARCH 2026</span></div>
-          <h3 class="card-title">The Quiet Death of the Long Read</h3>
+        <div class="content-grid">
+          <div class="card">
+            <div class="card-meta"><span>OPINION</span><span>APRIL 2026</span></div>
+            <h3 class="card-title">The Tyranny of the Interesting Life</h3>
+            <p class="card-desc">We have confused a life worth living with a life worth posting.</p>
+          </div>
+          <div class="card">
+            <div class="card-meta"><span>ANALYSIS</span><span>MARCH 2026</span></div>
+            <h3 class="card-title">What We Talk About When We Talk About Authenticity</h3>
+            <p class="card-desc">The word has been so thoroughly colonized by marketing that it has lost its original meaning.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -304,10 +317,43 @@
     <!-- DESK -->
     <section class="module" id="desk">
       <div class="wing-hero">
+        <span class="wing-label">WING_04 // OPERATIONS</span>
         <h1 class="wing-h1">The Desk</h1>
-        <p style="font-family:var(--font-body); font-size:20px; font-style:italic; opacity:0.6;">The operational core of the complex.</p>
+        <p class="wing-p">The engine room. Team structure, recruitment, and the architecture of the creative complex.</p>
+      </div>
+      <div class="content-section">
+        <h2 style="font-family:var(--font-display); font-size:32px; margin-bottom:40px;">From the Founders</h2>
+        <div class="founder-grid">
+          <div class="founder-card">
+            <h3 class="founder-name">Shaurya Seth</h3>
+            <span class="founder-title">Founder & Editor-in-Chief</span>
+            <p class="founder-bio">Shaurya is an Applied Psychology student with a deep interest in media ecosystems and narrative architecture. He founded Motion Desk as an independent investigative journalism initiative.</p>
+            <p class="founder-quote">"Thinks in systems and platforms — not just participating in things, but building structures where others can."</p>
+          </div>
+          <div class="founder-card">
+            <h3 class="founder-name">Aadya Mishra</h3>
+            <span class="founder-title">Co-Founder & Creative Lead</span>
+            <p class="founder-bio">Aadya is a Journalism and Mass Communication student with a sharp editorial eye and a deep instinct for creative expression. She brings discipline and creative range to the complex.</p>
+            <p class="founder-quote">"A simple person with a unique vision — you can expect anything and everything."</p>
+          </div>
+        </div>
+        
+        <div style="margin-top: 80px; background: rgba(255,255,255,0.03); padding: 60px; border: 1px solid var(--border-subtle);">
+          <h3 style="font-family:var(--font-display); font-size:28px; margin-bottom:20px;">Join the Desk</h3>
+          <p style="font-size:15px; opacity:0.7; margin-bottom:30px;">We're building something. If you want to write, create, or contribute — The Desk is where you start. We're currently looking for journalists, strategists, and creative thinkers.</p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyYm2V1PZqW-n6V-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ/viewform" target="_blank" style="font-family:var(--font-mono); font-size:12px; color:inherit; text-decoration:underline;">VIEW OPENINGS & JOIN US →</a>
+        </div>
       </div>
     </section>
+
+    <footer class="footer">
+      <span class="footer-brand">© 2026 MOTION DESK</span>
+      <div class="footer-links">
+        <a href="https://instagram.com/themotiondesk" target="_blank" class="footer-link">INSTAGRAM</a>
+        <a href="mailto:themotiondesk@gmail.com" class="footer-link">EMAIL</a>
+        <a href="#" class="footer-link" onclick="switchModule('desk')">ABOUT</a>
+      </div>
+    </footer>
   </div>
 
   <!-- ESSAY READER -->
@@ -369,7 +415,6 @@
     function switchModule(id) {
       const theme = themes[id];
       const body = document.getElementById('body');
-      
       document.documentElement.style.setProperty('--current-bg', theme.bg);
       document.documentElement.style.setProperty('--current-text', theme.text);
       
