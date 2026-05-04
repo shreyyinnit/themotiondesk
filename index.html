@@ -109,6 +109,24 @@
     .card-title { font-family: var(--font-display); font-size: 32px; margin-bottom: 16px; }
     .card-desc { font-size: 15px; line-height: 1.7; opacity: 0.7; }
 
+    /* PITCH SECTIONS */
+    .pitch-section { padding: 80px 60px; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); }
+    .pitch-heading { font-family: var(--font-display); font-size: 48px; margin-bottom: 20px; }
+    .pitch-subheading { font-family: var(--font-serif); font-size: 24px; font-style: italic; opacity: 0.7; margin-bottom: 40px; }
+    .pitch-body { font-size: 16px; line-height: 1.8; opacity: 0.8; max-width: 700px; margin-bottom: 40px; }
+    .pitch-list { list-style: none; margin-bottom: 40px; }
+    .pitch-list li { font-size: 15px; opacity: 0.7; padding: 8px 0; padding-left: 20px; position: relative; }
+    .pitch-list li::before { content: '●'; position: absolute; left: 0; opacity: 0.5; }
+    
+    .pitch-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+    .form-group { display: flex; flex-direction: column; }
+    .form-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.6; margin-bottom: 8px; }
+    .form-input, .form-textarea { background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); padding: 12px 16px; font-family: var(--font-sans); font-size: 14px; color: inherit; outline: none; transition: border-color 0.3s; }
+    .form-input:focus, .form-textarea:focus { border-color: rgba(255,255,255,0.3); }
+    .form-textarea { grid-column: 1 / -1; min-height: 120px; resize: vertical; }
+    .form-submit { background: var(--current-text); color: var(--current-bg); border: none; padding: 14px 32px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: 0.3s; margin-top: 20px; width: fit-content; }
+    .form-submit:hover { opacity: 0.85; }
+
     /* PERSPECTIVE HERO & ESSAYS */
     .perspective-hero { min-height: calc(100vh - 80px); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 2rem; }
     .hero-eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.4em; color: var(--sage); margin-bottom: 2rem; opacity: 0; transform: translateY(20px); transition: 1s ease 0.4s; }
@@ -149,9 +167,9 @@
     .footer-link:hover { opacity: 1; }
 
     @media (max-width: 900px) {
-      .wing-grid, .content-grid, .founder-grid { grid-template-columns: 1fr; }
+      .wing-grid, .content-grid, .founder-grid, .pitch-form { grid-template-columns: 1fr; }
       .nav-links { display: none; }
-      .home, .wing-hero, .content-section, .footer { padding: 60px 30px; }
+      .home, .wing-hero, .content-section, .pitch-section, .footer { padding: 60px 30px; }
       .featured-essay { padding: 2rem; }
     }
   </style>
@@ -241,9 +259,37 @@
             <p class="card-desc">A look at the invisible infrastructure behind the posts that fill your feed every morning.</p>
           </div>
         </div>
-        <div style="margin-top: 80px; text-align: center;">
-          <p style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; opacity:0.5; margin-bottom:20px;">HAVE A STORY WORTH TELLING?</p>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyYm2V1PZqW-n6V-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ/viewform" target="_blank" style="font-family:var(--font-mono); font-size:12px; color:inherit; text-decoration:underline;">PITCH THE GAZETTE →</a>
+      </div>
+
+      <!-- GAZETTE PITCH -->
+      <div class="pitch-section">
+        <h2 class="pitch-heading">Have a story worth telling?</h2>
+        <p class="pitch-subheading">Pitch us.</p>
+        <p class="pitch-body">The Gazette publishes reporting, analysis, opinion, and features. We're looking for sharp writing on media, culture, and the creative industries. Send us your pitch — we read everything.</p>
+        <ul class="pitch-list">
+          <li>Reporting & Features</li>
+          <li>Analysis & Opinion</li>
+          <li>Dispatches & Essays</li>
+          <li>Interviews</li>
+        </ul>
+        <div class="pitch-form">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input class="form-input" type="text" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Proposed Headline</label>
+            <input class="form-input" type="text" placeholder="What's the story?" style="grid-column: 1 / -1;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your Pitch (0/500)</label>
+            <textarea class="form-textarea" placeholder="Tell us what you want to write and why it matters..."></textarea>
+          </div>
+          <button class="form-submit">SUBMIT PITCH →</button>
         </div>
       </div>
     </section>
@@ -276,10 +322,37 @@
             <p style="font-family:var(--font-mono); font-size:12px; opacity:0.5;">YOUR PROJECT HERE?</p>
           </div>
         </div>
-        <div style="margin-top: 80px; border-top: 1px solid var(--border-subtle); padding-top: 60px;">
-          <h2 style="font-family:var(--font-display); font-size:40px; margin-bottom:20px;">We make things move.</h2>
-          <p style="font-size:16px; opacity:0.7; max-width:600px; margin-bottom:40px;">Strategy, writing, and creative direction for brands that want to say something worth hearing. We work with clients who are building something real.</p>
-          <a href="mailto:themotiondesk@gmail.com" style="font-family:var(--font-mono); font-size:12px; color:inherit; text-decoration:underline;">WORK WITH US →</a>
+      </div>
+
+      <!-- AGENCY PITCH -->
+      <div class="pitch-section">
+        <h2 class="pitch-heading">Need something made?</h2>
+        <p class="pitch-subheading">We don't do mediocre.</p>
+        <p class="pitch-body">Strategy, writing, and creative direction for brands that want to say something worth hearing. We work with clients who are building something real. From content strategy and brand voice to campaign direction and editorial consulting.</p>
+        <ul class="pitch-list">
+          <li>Content Strategy & Architecture</li>
+          <li>Brand Voice & Messaging</li>
+          <li>Campaign Direction & Execution</li>
+          <li>Editorial Consulting & Ghostwriting</li>
+        </ul>
+        <div class="pitch-form">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input class="form-input" type="text" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Company / Brand</label>
+            <input class="form-input" type="text" placeholder="Who are you?" style="grid-column: 1 / -1;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">What do you need?</label>
+            <textarea class="form-textarea" placeholder="Tell us about your project, goals, and timeline..."></textarea>
+          </div>
+          <button class="form-submit">START A PROJECT →</button>
         </div>
       </div>
     </section>
@@ -312,6 +385,38 @@
           </div>
         </div>
       </div>
+
+      <!-- PERSPECTIVE PITCH -->
+      <div class="pitch-section">
+        <h2 class="pitch-heading">Have something worth saying?</h2>
+        <p class="pitch-subheading">We want to read it.</p>
+        <p class="pitch-body">The Perspective publishes essays, opinion, analysis, and reflection. We value voice over credentials. If you have an idea that needs more than a headline, pitch us. This is where long-form thinking lives.</p>
+        <ul class="pitch-list">
+          <li>Essays & Long-form Pieces</li>
+          <li>Opinion & Analysis</li>
+          <li>Reflection & Personal Essays</li>
+          <li>Ideas Worth Sitting With</li>
+        </ul>
+        <div class="pitch-form">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input class="form-input" type="text" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Working Title</label>
+            <input class="form-input" type="text" placeholder="What's the essay about?" style="grid-column: 1 / -1;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your Pitch (0/500)</label>
+            <textarea class="form-textarea" placeholder="What's the argument? Why does it matter? What's your angle?"></textarea>
+          </div>
+          <button class="form-submit">SUBMIT PITCH →</button>
+        </div>
+      </div>
     </section>
 
     <!-- DESK -->
@@ -337,11 +442,47 @@
             <p class="founder-quote">"A simple person with a unique vision — you can expect anything and everything."</p>
           </div>
         </div>
-        
-        <div style="margin-top: 80px; background: rgba(255,255,255,0.03); padding: 60px; border: 1px solid var(--border-subtle);">
-          <h3 style="font-family:var(--font-display); font-size:28px; margin-bottom:20px;">Join the Desk</h3>
-          <p style="font-size:15px; opacity:0.7; margin-bottom:30px;">We're building something. If you want to write, create, or contribute — The Desk is where you start. We're currently looking for journalists, strategists, and creative thinkers.</p>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyYm2V1PZqW-n6V-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ-zZ/viewform" target="_blank" style="font-family:var(--font-mono); font-size:12px; color:inherit; text-decoration:underline;">VIEW OPENINGS & JOIN US →</a>
+      </div>
+
+      <!-- DESK JOIN -->
+      <div class="pitch-section">
+        <h2 class="pitch-heading">We're building something. Come be part of it.</h2>
+        <p class="pitch-subheading">Join Motion Desk.</p>
+        <p class="pitch-body">Motion Desk is a growing creative complex with four wings and a lot of ambition. We're looking for writers, strategists, and operators who want to build something real — not just contribute to something that already exists.</p>
+        <ul class="pitch-list">
+          <li>Remote-first, async-friendly</li>
+          <li>Four distinct wings to contribute to</li>
+          <li>Real editorial and creative work</li>
+          <li>A team that takes craft seriously</li>
+        </ul>
+        <div class="pitch-form">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input class="form-input" type="text" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Wing of Interest</label>
+            <select class="form-input" style="grid-column: 1 / -1;">
+              <option>Select a wing</option>
+              <option>The Gazette</option>
+              <option>The Agency</option>
+              <option>The Perspective</option>
+              <option>The Desk</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Role</label>
+            <input class="form-input" type="text" placeholder="What role are you applying for?" style="grid-column: 1 / -1;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Why Motion Desk? (0/500)</label>
+            <textarea class="form-textarea" placeholder="Tell us why you want to be part of this..."></textarea>
+          </div>
+          <button class="form-submit">SUBMIT APPLICATION →</button>
         </div>
       </div>
     </section>
@@ -367,10 +508,10 @@
         <p>Because that is what most of us are doing now. We are not creating. We are converting. Taking half-formed thoughts and rushing them into something consumable before they even understand themselves. It is like forcing a sentence to end before it knows what it is trying to say. And then we wonder why everything feels hollow, repetitive, slightly off.</p>
         <p>Slowness interrupts that cycle. It forces you to stay.</p>
         <p>To stay with confusion. To stay with boredom. To stay with the uncomfortable phase where nothing is clicking and everything feels pointless. And that phase is deeply, viscerally irritating because it does not reward you. There are no likes for sitting with a blank page. There is no applause for thinking. It feels like failure, like wasted time, like you are falling behind some invisible race that everyone else seems to be winning.</p>
-        <p>But that “wasted” time is where the actual work is happening.</p>
+        <p>But that "wasted" time is where the actual work is happening.</p>
         <p>Creativity is not the moment of output. It is the slow accumulation of noticing. The way a random conversation sticks in your head for days. The way a color combination bothers you for no reason until suddenly it makes sense in a completely different context. The way an idea mutates quietly in the background while you are doing something entirely unrelated. None of that happens on demand. None of that happens quickly.</p>
         <p>And yet we keep trying to force it.</p>
-        <p>We treat creativity like a machine. Input effort, output result. But it behaves more like a living thing. It needs space, time, inconsistency. It needs you to leave it alone sometimes. It needs you to not constantly interrogate it like “are you done yet, are you good yet, are you worthy yet.” Because the moment you do that, it freezes. It performs instead of evolving.</p>
+        <p>We treat creativity like a machine. Input effort, output result. But it behaves more like a living thing. It needs space, time, inconsistency. It needs you to leave it alone sometimes. It needs you to not constantly interrogate it like "are you done yet, are you good yet, are you worthy yet." Because the moment you do that, it freezes. It performs instead of evolving.</p>
         <p>Slowness gives creativity room to breathe without being watched.</p>
         <p>There is also something deeply personal about moving slowly. When you rush, you default. You rely on patterns, trends, things that have already worked before. You imitate without even realizing it because there is no time to question anything. But when you slow down, you start noticing your own instincts. Your weird preferences. The things you cannot explain but keep coming back to anyway.</p>
         <p>And that is where originality actually comes from. Not from trying to be different, but from having enough time to notice what is already uniquely yours.</p>
@@ -379,7 +520,7 @@
         <p>Another thing no one likes admitting is that speed often comes from fear. Fear of irrelevance, fear of being forgotten, fear that if you do not keep up, you will disappear. So you keep producing, keep posting, keep moving, not necessarily because you have something to say, but because silence feels dangerous.</p>
         <p>Slowness asks you to trust that silence.</p>
         <p>To trust that not constantly being visible does not erase you. To trust that taking your time does not mean you are falling behind. To trust that what you are making is allowed to take as long as it needs, even if that makes no sense to anyone else.</p>
-        <p>This is not romantic. It is actually very annoying in practice. Because slowing down means you will produce less. You will second guess more. You will scrap things that could have been “good enough.” You will watch other people move ahead while you are still figuring something out.</p>
+        <p>This is not romantic. It is actually very annoying in practice. Because slowing down means you will produce less. You will second guess more. You will scrap things that could have been "good enough." You will watch other people move ahead while you are still figuring something out.</p>
         <p>But what you end up with is yours in a way rushed work never is.</p>
         <p>There is a certain solidity to something that has been given time. It carries weight. It feels intentional. Even if it is messy, even if it is imperfect, it has presence. You can tell it was not just pushed out to exist. It was allowed to become.</p>
         <p>Slowness also changes your relationship with failure. When you rush, failure feels immediate and final. You made something, it did not work, move on quickly before it affects you too much. But when you slow down, failure becomes part of the process instead of an interruption. You sit with it. You understand it. You let it inform what comes next instead of just avoiding it.</p>
@@ -388,8 +529,8 @@
         <p>Because rushing turns creativity into a task. Slowness turns it back into a practice.</p>
         <p>A practice that does not always look productive. A practice that is often invisible. A practice that requires patience in a culture that has none. But also a practice that, over time, builds something real. Something that does not just exist to be seen, but exists because it needed to. And that difference, even if no one else notices it, changes everything.</p>
         <p>If slowness is the rebellion, then the follow up question is honestly brutal. How do you actually live like that without losing your mind in a world that keeps rewarding the exact opposite? Because it is one thing to romanticize slowness in an essay and another thing to sit there on a random Tuesday afternoon, staring at your half finished work while everyone else is posting their third polished thing of the day. The gap between belief and practice is where most people quietly give up. Not because they do not care, but because slowness does not come with immediate reassurance. It does not clap for you. It does not tell you that you are doing the right thing. So the first shift is not external. It is psychological. You have to redefine what progress even feels like.</p>
-        <p>Right now, progress is visible. It is measurable. It is output, numbers, reactions. You can point to it and say, yes, I did something. Slowness removes that comfort. Progress becomes internal, subtle, almost invisible. It is the moment something clicks after days of confusion. It is realizing your idea changed in a way you did not force. It is noticing that your instincts are getting sharper even if you have nothing “finished” to show for it. And that kind of progress requires trust. An almost delusional level of trust, honestly. Because you are investing time without immediate return. You are choosing depth over visibility, and depth does not trend.</p>
-        <p>This is where people start bargaining with themselves. They try to be “slow but still productive,” “intentional but still consistent,” “deep but still algorithm friendly.” And sure, you can find some balance, but at some point you have to accept that slowness will cost you something. Usually speed. Sometimes attention. Occasionally opportunities that reward quick output over thoughtful work. And that is where it gets uncomfortable in a very real, practical way. Because we do not exist in a vacuum. You have deadlines. You have expectations. You have this constant low level anxiety that if you do not keep up, you will get left behind.</p>
+        <p>Right now, progress is visible. It is measurable. It is output, numbers, reactions. You can point to it and say, yes, I did something. Slowness removes that comfort. Progress becomes internal, subtle, almost invisible. It is the moment something clicks after days of confusion. It is realizing your idea changed in a way you did not force. It is noticing that your instincts are getting sharper even if you have nothing "finished" to show for it. And that kind of progress requires trust. An almost delusional level of trust, honestly. Because you are investing time without immediate return. You are choosing depth over visibility, and depth does not trend.</p>
+        <p>This is where people start bargaining with themselves. They try to be "slow but still productive," "intentional but still consistent," "deep but still algorithm friendly." And sure, you can find some balance, but at some point you have to accept that slowness will cost you something. Usually speed. Sometimes attention. Occasionally opportunities that reward quick output over thoughtful work. And that is where it gets uncomfortable in a very real, practical way. Because we do not exist in a vacuum. You have deadlines. You have expectations. You have this constant low level anxiety that if you do not keep up, you will get left behind.</p>
         <p>So slowness cannot just be a vibe. It has to be a boundary. Not a deliberate one. You choose where you allow speed and where you refuse it. Maybe you meet deadlines but do not rush your ideas. Maybe you post less but stand by what you post. Maybe you take longer to create but shorten the time you spend comparing yourself to others. It is not about rejecting the system entirely. It is about not letting it dictate every part of your process.</p>
         <p>And yes, you will feel like you are doing it wrong sometimes. There will be moments where your brain goes, this is inefficient, this is unnecessary, just finish it and move on. That voice is loud because it has been trained by everything around you. Speed is framed as competence. Slowness is framed as hesitation. So choosing slowness can feel like admitting weakness, even when it is actually requiring more discipline than rushing ever did. Because rushing is reactive. Slowness is intentional.</p>
         <p>Another thing that shifts when you practice slowness is your relationship with time itself. Time stops being something you are constantly running out of and starts becoming something you are actually using. That sounds obvious, but it is not. Most of us experience time as pressure. There is never enough of it. You are always behind. Always catching up. Slowness disrupts that panic just enough for you to realize that not everything needs to be urgent. And when everything is not urgent, you can prioritize better. You start noticing which ideas deserve time and which ones are just noise. You stop chasing every spark of inspiration and instead follow the ones that stay. The ones that come back even when you ignore them. The ones that annoy you a little because they refuse to leave. Those are usually the ideas worth building.</p>
