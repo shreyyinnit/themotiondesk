@@ -272,25 +272,25 @@
           <li>Dispatches & Essays</li>
           <li>Interviews</li>
         </ul>
-        <div class="pitch-form">
+        <form class="pitch-form" name="gazette-pitch" data-netlify="true" onsubmit="handleMailSubmit(event, 'Gazette Pitch')">
           <div class="form-group">
             <label class="form-label">Name</label>
-            <input class="form-input" type="text" placeholder="Your name">
+            <input class="form-input" name="name" type="text" placeholder="Your name" required>
           </div>
           <div class="form-group">
             <label class="form-label">Email</label>
-            <input class="form-input" type="email" placeholder="your@email.com">
+            <input class="form-input" name="email" type="email" placeholder="your@email.com" required>
           </div>
           <div class="form-group">
             <label class="form-label">Proposed Headline</label>
-            <input class="form-input" type="text" placeholder="What's the story?" style="grid-column: 1 / -1;">
+            <input class="form-input" name="headline" type="text" placeholder="What's the story?" style="grid-column: 1 / -1;" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Your Pitch (0/500)</label>
-            <textarea class="form-textarea" placeholder="Tell us what you want to write and why it matters..."></textarea>
+            <label class="form-label">Your Pitch</label>
+            <textarea class="form-textarea" name="pitch" placeholder="Tell us what you want to write and why it matters..." required></textarea>
           </div>
-          <button class="form-submit">SUBMIT PITCH →</button>
-        </div>
+          <button type="submit" class="form-submit">SUBMIT PITCH →</button>
+        </form>
       </div>
     </section>
 
@@ -335,25 +335,25 @@
           <li>Campaign Direction & Execution</li>
           <li>Editorial Consulting & Ghostwriting</li>
         </ul>
-        <div class="pitch-form">
+        <form class="pitch-form" name="agency-inquiry" data-netlify="true" onsubmit="handleMailSubmit(event, 'Agency Inquiry')">
           <div class="form-group">
             <label class="form-label">Name</label>
-            <input class="form-input" type="text" placeholder="Your name">
+            <input class="form-input" name="name" type="text" placeholder="Your name" required>
           </div>
           <div class="form-group">
             <label class="form-label">Email</label>
-            <input class="form-input" type="email" placeholder="your@email.com">
+            <input class="form-input" name="email" type="email" placeholder="your@email.com" required>
           </div>
           <div class="form-group">
             <label class="form-label">Company / Brand</label>
-            <input class="form-input" type="text" placeholder="Who are you?" style="grid-column: 1 / -1;">
+            <input class="form-input" name="brand" type="text" placeholder="Who are you?" style="grid-column: 1 / -1;" required>
           </div>
           <div class="form-group">
             <label class="form-label">What do you need?</label>
-            <textarea class="form-textarea" placeholder="Tell us about your project, goals, and timeline..."></textarea>
+            <textarea class="form-textarea" name="details" placeholder="Tell us about your project, goals, and timeline..." required></textarea>
           </div>
-          <button class="form-submit">START A PROJECT →</button>
-        </div>
+          <button type="submit" class="form-submit">START A PROJECT →</button>
+        </form>
       </div>
     </section>
 
@@ -397,25 +397,25 @@
           <li>Reflection & Personal Essays</li>
           <li>Ideas Worth Sitting With</li>
         </ul>
-        <div class="pitch-form">
+        <form class="pitch-form" name="perspective-pitch" data-netlify="true" onsubmit="handleMailSubmit(event, 'Perspective Pitch')">
           <div class="form-group">
             <label class="form-label">Name</label>
-            <input class="form-input" type="text" placeholder="Your name">
+            <input class="form-input" name="name" type="text" placeholder="Your name" required>
           </div>
           <div class="form-group">
             <label class="form-label">Email</label>
-            <input class="form-input" type="email" placeholder="your@email.com">
+            <input class="form-input" name="email" type="email" placeholder="your@email.com" required>
           </div>
           <div class="form-group">
             <label class="form-label">Working Title</label>
-            <input class="form-input" type="text" placeholder="What's the essay about?" style="grid-column: 1 / -1;">
+            <input class="form-input" name="title" type="text" placeholder="What's the essay about?" style="grid-column: 1 / -1;" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Your Pitch (0/500)</label>
-            <textarea class="form-textarea" placeholder="What's the argument? Why does it matter? What's your angle?"></textarea>
+            <label class="form-label">Your Pitch</label>
+            <textarea class="form-textarea" name="pitch" placeholder="What's the argument? Why does it matter? What's your angle?" required></textarea>
           </div>
-          <button class="form-submit">SUBMIT PITCH →</button>
-        </div>
+          <button type="submit" class="form-submit">SUBMIT PITCH →</button>
+        </form>
       </div>
     </section>
 
@@ -455,19 +455,19 @@
           <li>Real editorial and creative work</li>
           <li>A team that takes craft seriously</li>
         </ul>
-        <div class="pitch-form">
+        <form class="pitch-form" name="desk-join" data-netlify="true" onsubmit="handleMailSubmit(event, 'Join The Desk')">
           <div class="form-group">
             <label class="form-label">Name</label>
-            <input class="form-input" type="text" placeholder="Your name">
+            <input class="form-input" name="name" type="text" placeholder="Your name" required>
           </div>
           <div class="form-group">
             <label class="form-label">Email</label>
-            <input class="form-input" type="email" placeholder="your@email.com">
+            <input class="form-input" name="email" type="email" placeholder="your@email.com" required>
           </div>
           <div class="form-group">
             <label class="form-label">Wing of Interest</label>
-            <select class="form-input" style="grid-column: 1 / -1;">
-              <option>Select a wing</option>
+            <select class="form-input" name="wing" style="grid-column: 1 / -1;" required>
+              <option value="">Select a wing</option>
               <option>The Gazette</option>
               <option>The Agency</option>
               <option>The Perspective</option>
@@ -476,14 +476,14 @@
           </div>
           <div class="form-group">
             <label class="form-label">Role</label>
-            <input class="form-input" type="text" placeholder="What role are you applying for?" style="grid-column: 1 / -1;">
+            <input class="form-input" name="role" type="text" placeholder="What role are you applying for?" style="grid-column: 1 / -1;" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Why Motion Desk? (0/500)</label>
-            <textarea class="form-textarea" placeholder="Tell us why you want to be part of this..."></textarea>
+            <label class="form-label">Why Motion Desk?</label>
+            <textarea class="form-textarea" name="motivation" placeholder="Tell us why you want to be part of this..." required></textarea>
           </div>
-          <button class="form-submit">SUBMIT APPLICATION →</button>
-        </div>
+          <button type="submit" class="form-submit">SUBMIT APPLICATION →</button>
+        </form>
       </div>
     </section>
 
@@ -581,6 +581,33 @@
     function closeEssay() {
       document.getElementById('reader').classList.remove('active');
       document.body.style.overflow = 'auto';
+    }
+
+    function handleMailSubmit(event, type) {
+      event.preventDefault();
+      const form = event.target;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      
+      let body = `New Submission from Motion Desk Website:\n\n`;
+      body += `Type: ${type}\n`;
+      for (const [key, value] of Object.entries(data)) {
+        if (key !== 'netlify-form-name') {
+          body += `${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}\n`;
+        }
+      }
+
+      const subject = `[Motion Desk] ${type} - ${data.name || 'New Submission'}`;
+      const mailtoLink = `mailto:themotiondesk@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      window.location.href = mailtoLink;
+      
+      // Also trigger netlify submission in background
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString(),
+      }).catch(err => console.log('Netlify submission handled via mailto fallback'));
     }
 
     // LEAF CANVAS
