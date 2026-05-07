@@ -89,7 +89,7 @@
     .home { padding: 120px 60px; max-width: 1400px; margin: 0 auto; }
     .home-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.3em; margin-bottom: 24px; display: block; }
     .home-title { font-family: var(--font-display); font-size: clamp(60px, 12vw, 160px); line-height: 0.85; margin-bottom: 60px; font-weight: 400; }
-    .wing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    .wing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
     .wing-box { padding: 60px; border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: all 0.4s; background: rgba(0,0,0,0.02); }
     .wing-box:hover { background: white; transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
     .wing-box-name { font-family: var(--font-display); font-size: 40px; margin-bottom: 20px; font-style: italic; }
@@ -197,7 +197,6 @@
       <div class="nav-logo" onclick="switchModule('home')">THE MOTION DESK</div>
       <div class="nav-links">
         <div class="nav-link" onclick="switchModule('gazette')">Gazette</div>
-        <div class="nav-link" onclick="switchModule('agency')">Agency</div>
         <div class="nav-link" onclick="switchModule('perspective')">Perspective</div>
         <div class="nav-link" onclick="switchModule('desk')">Desk</div>
       </div>
@@ -213,10 +212,7 @@
             <h2 class="wing-box-name">The Gazette</h2>
             <p class="wing-box-desc">Independent media exploring culture and the architecture of ideas.</p>
           </div>
-          <div class="wing-box" onclick="switchModule('agency')">
-            <h2 class="wing-box-name">The Agency</h2>
-            <p class="wing-box-desc">Strategic creative laboratory building brands that behave like living systems.</p>
-          </div>
+
           <div class="wing-box" onclick="switchModule('perspective')">
             <h2 class="wing-box-name">The Perspective</h2>
             <p class="wing-box-desc">Essays and reflections that reward slow reading and deep thought.</p>
@@ -294,68 +290,7 @@
       </div>
     </section>
 
-    <!-- AGENCY -->
-    <section class="module" id="agency">
-      <div class="wing-hero">
-        <span class="wing-label">WING_02 // CREATIVE</span>
-        <h1 class="wing-h1">The Agency</h1>
-        <p class="wing-p">Strategic creative laboratory. We build brands with soul and systems. Strategy, writing, and creative direction.</p>
-      </div>
-      <div class="content-section">
-        <div class="content-grid">
-          <div class="card">
-            <div class="card-meta"><span>CASE STUDY</span><span>2026</span></div>
-            <h3 class="card-title">Kova Health</h3>
-            <p class="card-desc">A launch campaign built around real patient stories that drove 40% above projected sign-ups.</p>
-          </div>
-          <div class="card">
-            <div class="card-meta"><span>CASE STUDY</span><span>2025</span></div>
-            <h3 class="card-title">Meridian Studio</h3>
-            <p class="card-desc">Rebuilding a creative studio's voice from the ground up, tripling inbound inquiries in four months.</p>
-          </div>
-          <div class="card">
-            <div class="card-meta"><span>CASE STUDY</span><span>2025</span></div>
-            <h3 class="card-title">Volta Magazine</h3>
-            <p class="card-desc">Turning a print legacy into a digital-first publication with 8,000 subscribers in 90 days.</p>
-          </div>
-          <div class="card" style="border: 1px dashed var(--border-subtle); display: flex; align-items: center; justify-content: center; padding: 40px;">
-            <p style="font-family:var(--font-mono); font-size:12px; opacity:0.5;">YOUR PROJECT HERE?</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- AGENCY PITCH -->
-      <div class="pitch-section">
-        <h2 class="pitch-heading">Need something made?</h2>
-        <p class="pitch-subheading">We don't do mediocre.</p>
-        <p class="pitch-body">Strategy, writing, and creative direction for brands that want to say something worth hearing. We work with clients who are building something real. From content strategy and brand voice to campaign direction and editorial consulting.</p>
-        <ul class="pitch-list">
-          <li>Content Strategy & Architecture</li>
-          <li>Brand Voice & Messaging</li>
-          <li>Campaign Direction & Execution</li>
-          <li>Editorial Consulting & Ghostwriting</li>
-        </ul>
-        <form class="pitch-form" name="agency-inquiry" data-netlify="true" onsubmit="handleMailSubmit(event, 'Agency Inquiry')">
-          <div class="form-group">
-            <label class="form-label">Name</label>
-            <input class="form-input" name="name" type="text" placeholder="Your name" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input class="form-input" name="email" type="email" placeholder="your@email.com" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Company / Brand</label>
-            <input class="form-input" name="brand" type="text" placeholder="Who are you?" style="grid-column: 1 / -1;" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">What do you need?</label>
-            <textarea class="form-textarea" name="details" placeholder="Tell us about your project, goals, and timeline..." required></textarea>
-          </div>
-          <button type="submit" class="form-submit">START A PROJECT →</button>
-        </form>
-      </div>
-    </section>
 
     <!-- PERSPECTIVE -->
     <section class="module" id="perspective">
