@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draft Mode — A Motion Desk Podcast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #080808;
+      --text-primary: #f5f5f7;
+      --text-secondary: #555555;
+      --accent-violet: #a78bfa;
+      --accent-amber: #f59e0b;
+      --accent-green: #4ade80;
+      --border-color: #1c1c1e;
+      
+      --font-mono: 'Space Mono', monospace;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-display: 'Playfair Display', Georgia, serif;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAVIGATION */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 60px;
+      z-index: 1000;
+      background: rgba(8, 8, 8, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 0.5px solid var(--border-color);
+    }
+
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      cursor: pointer;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+    }
+
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: inherit;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+      text-decoration: none;
+    }
+
+    .nav-link:hover {
+      opacity: 1;
+    }
+
+    /* MAIN CONTENT */
+    .container {
+      padding-top: 80px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      padding: 120px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 10vw, 120px);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title .period {
+      color: var(--accent-violet);
+    }
+
+    .hero-subline {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .coming-soon-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(167, 139, 250, 0.1);
+      border: 0.5px solid var(--accent-violet);
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--accent-violet);
+      text-transform: uppercase;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-violet);
+      border-radius: 50%;
+    }
+
+    /* STRANDS SECTION */
+    .strands {
+      padding: 80px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      border-top: 0.5px solid var(--border-color);
+    }
+
+    .strand {
+      display: grid;
+      grid-template-columns: 60px 1fr auto;
+      gap: 40px;
+      align-items: center;
+      padding: 40px 0;
+      border-bottom: 0.5px solid var(--border-color);
+    }
+
+    .strand:last-child {
+      border-bottom: none;
+    }
+
+    .strand-number {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .strand-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .strand-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .strand-name {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--text-primary);
+    }
+
+    .strand-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .strand-tag.gazette {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 0.5px solid var(--accent-amber);
+    }
+
+    .strand-tag.perspective {
+      background: rgba(167, 139, 250, 0.15);
+      color: var(--accent-violet);
+      border: 0.5px solid var(--accent-violet);
+    }
+
+    .strand-tag.flagship {
+      background: rgba(245, 245, 247, 0.1);
+      color: var(--text-primary);
+      border: 0.5px solid var(--border-color);
+    }
+
+    .strand-description {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    /* FOOTER */
+    .footer {
+      padding: 80px 60px;
+      border-top: 0.5px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .footer-brand {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      opacity: 0.4;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .footer-link {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-decoration: none;
+      color: inherit;
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+
+    .footer-link:hover {
+      opacity: 1;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .nav {
+        padding: 0 30px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero, .strands, .footer {
+        padding: 60px 30px;
+      }
+
+      .strand {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .strand-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-title {
+        font-size: clamp(36px, 8vw, 80px);
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 40px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo">THE MOTION DESK</a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/#gazette" class="nav-link">Gazette</a>
+      <a href="/#perspective" class="nav-link">Perspective</a>
+      <a href="/#desk" class="nav-link">Desk</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <span class="hero-eyebrow">A Motion Desk Podcast</span>
+      <h1 class="hero-title">Draft Mode<span class="period">.</span></h1>
+      <p class="hero-subline">A feed. Three strands. The gap between what something was trying to be — and what it actually became.</p>
+      <div class="coming-soon-badge">
+        <span class="badge-dot"></span>
+        Coming soon — 2026
+      </div>
+    </section>
+
+    <!-- STRANDS -->
+    <section class="strands">
+      <!-- Strand 01 -->
+      <div class="strand">
+        <div class="strand-number">01</div>
+        <div class="strand-info">
+          <div class="strand-header">
+            <h2 class="strand-name">The Back Page</h2>
+            <span class="strand-tag gazette">Gazette</span>
+          </div>
+          <p class="strand-description">Two hosts. One story. An argument about how it was told.</p>
+        </div>
+      </div>
+
+      <!-- Strand 02 -->
+      <div class="strand">
+        <div class="strand-number">02</div>
+        <div class="strand-info">
+          <div class="strand-header">
+            <h2 class="strand-name">Unfinished Thoughts</h2>
+            <span class="strand-tag perspective">Perspective</span>
+          </div>
+          <p class="strand-description">One host. One idea they haven't resolved yet.</p>
+        </div>
+      </div>
+
+      <!-- Strand 03 -->
+      <div class="strand">
+        <div class="strand-number">03</div>
+        <div class="strand-info">
+          <div class="strand-header">
+            <h2 class="strand-name">On The Record</h2>
+            <span class="strand-tag flagship">Flagship</span>
+          </div>
+          <p class="strand-description">The editorial meeting as content. Shaurya & Aadya.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span class="footer-brand">© 2026 MOTION DESK</span>
+    <div class="footer-links">
+      <a href="https://instagram.com/themotiondesk" target="_blank" class="footer-link">INSTAGRAM</a>
+      <a href="mailto:themotiondesk@gmail.com" class="footer-link">EMAIL</a>
+      <a href="/" class="footer-link">ABOUT</a>
+    </div>
+  </footer>
+</body>
+</html>
